@@ -4,7 +4,7 @@ import re
 import json
 
 # IP de destination pour tester le réseau
-DEST_IP = "192.168.2.2"
+DEST_IP = "10.8.0.7"
 
 # Fonction pour exécuter une commande et récupérer la sortie
 def run_command(command):

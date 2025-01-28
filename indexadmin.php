@@ -238,32 +238,34 @@ function changeRoute(routeNumber) {
 </script>
 
     <!-- Table for Metrics -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary" id="table-title">Select a server to view metrics</h6>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Server</th>
-                                <th>Latency (ms)</th>
-                                <th>Bandwidth Usage (Mbps)</th>
-                                <th>Connection Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="metrics-body">
-                            <tr>
-                                <td colspan="4">No server selected</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 class="h3 mb-0 text-gray-800">Network Metrics</h1>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Metrics Overview</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Robot ID</th>
+                                                    <th>Latency</th>
+                                                    <th>Packet Loss</th>
+                                                    <th>Bandwidth Usage</th>
+                                                    <th>Connection Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="metrics-body">
+                                                <tr>
+                                                    <td colspan="6">Chargement des métriques...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
     <script>
         let selectedServer = null; // Store selected server
@@ -288,29 +290,33 @@ function changeRoute(routeNumber) {
         });
 
         function refreshMetrics() {
-            if (!selectedServer) return; // Only fetch if a server is selected
+                                fetch("get_metrics.php")
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        let html = `
+                    <tr>
+                        <td>${data.robot_id || "N/A"}</td>
+                        <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
+                        <td>${data.packet_loss !== null ? data.packet_loss + " %" : "N/A"}</td>
+                        <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
+                        <td>${data.connection_status || "N/A"}</td>
+                    </tr>
+                `;
+                                        document.getElementById("metrics-body").innerHTML = html;
+                                    })
+                                    .catch(error => {
+                                        console.error("Erreur lors de la récupération des métriques :", error);
+                                        document.getElementById("metrics-body").innerHTML = `
+                    <tr><td colspan="6">Erreur de chargement des métriques.</td></tr>
+                `;
+                                    });
+                            }
 
-            fetch(`get_metrics.php?server=${selectedServer}`)
-                .then(response => response.json())
-                .then(metric => {
-                    document.getElementById("table-title").innerText = `Metrics for Server ${selectedServer}`;
-                    const metricsBody = document.getElementById("metrics-body");
-                    metricsBody.innerHTML = ''; // Clear existing rows
+                            // Rafraîchir toutes les 10 secondes
+                            setInterval(refreshMetrics, 10000);
 
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${selectedServer}</td>
-                        <td>${metric.latency !== null ? metric.latency + " ms" : "N/A"}</td>
-                        <td>${metric.bandwidth_usage !== null ? metric.bandwidth_usage + " Mbps" : "N/A"}</td>
-                        <td>${metric.connection_status || "N/A"}</td>
-                    `;
-                    metricsBody.appendChild(row);
-                })
-                .catch(error => {
-                    console.error("Error fetching metrics:", error);
-                    document.getElementById("metrics-body").innerHTML = `<tr><td colspan="4">Error loading metrics.</td></tr>`;
-                });
-        }
+                            // Charger les métriques au démarrage
+                            refreshMetrics();
 
         document.querySelectorAll('.server-btn').forEach(button => {
             button.addEventListener('click', function () {
@@ -409,7 +415,6 @@ function changeRoute(routeNumber) {
                         <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
                         <td>${data.packet_loss !== null ? data.packet_loss + " %" : "N/A"}</td>
                         <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
-                        <td>${data.jitter !== null ? data.jitter + " ms" : "N/A"}</td>
                         <td>${data.connection_status || "N/A"}</td>
                     </tr>
                 `;

@@ -20,7 +20,7 @@ switch ($route) {
         $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.5';
         break;
     case '3':
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.6';
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.12';
         break;
     default:
         echo "Route invalide. Usage : ?route=1|2|3";
