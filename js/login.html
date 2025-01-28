@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login page for MedicalApp">
+    <meta name="author" content="Your Team">
+    <title>Login - MedicalApp</title>
+
+    <!-- Custom fonts and styles -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"> <!-- AOS animations -->
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(120deg, #4e73df, #224abe, #224abe);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .app-title {
+            position: absolute;
+            top: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .app-title:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            color: #4e73df;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #224abe;
+        }
+
+        .form-control-user {
+            margin-bottom: 20px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+        }
+
+        .btn {
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #4e73df;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #224abe;
+            transform: scale(1.05);
+        }
+
+        .btn-google {
+            background-color: #ea4335;
+            color: white;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-google:hover {
+            background-color: #c12d24;
+        }
+
+        .btn-facebook {
+            background-color: #3b5998;
+            color: white;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-facebook:hover {
+            background-color: #2d4373;
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+
+        .text-center a {
+            color: #4e73df;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- App Title -->
+    <a href="index.php" class="app-title">MedicalApp</a>
+    <h1> </h1>
+    <h1> </h1>
+    <h1> </h1>
+    <h1> </h1>
+    <h1> </h1>
+    <h1> </h1>
+    <!-- Login Card -->
+    <div class="card" data-aos="zoom-in">
+        <h1>Welcome Back!</h1>
+        <form class="user" method="POST" action="login.php">
+            <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Enter Email Address..." required>
+            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Login
+            </button>
+            <hr>
+            <a href="#" class="btn btn-google btn-user btn-block">
+                <i class="fab fa-google fa-fw"></i> Login with Google
+            </a>
+            <a href="#" class="btn btn-facebook btn-user btn-block">
+                <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+            </a>
+        </form>
+        <div class="text-center">
+            <a class="small" href="forgot-password.html">Forgot Password?</a>
+            <a class="small" href="register.html">Create an Account!</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 MedicalApp | All Rights Reserved | <a href="terms.html">Terms of Use</a>
+    </footer>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- AOS JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+
+</html>
