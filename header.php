@@ -57,14 +57,6 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
                 </a>
             </li>
 
-            <!-- Configure Network Routes -->
-            <li class="nav-item <?= $currentPage === 'network-routes' ? 'active' : '' ?>">
-                <a class="nav-link" href="indexadmin.php?page=network-routes">
-                    <i class="fas fa-network-wired"></i>
-                    <span>Configure Network Routes</span>
-                </a>
-            </li>
-
             <!-- Network Metrics -->
             <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
                 <a class="nav-link" href="indexadmin.php?page=network-metrics">

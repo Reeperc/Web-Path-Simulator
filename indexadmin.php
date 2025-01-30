@@ -19,6 +19,45 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
 <html lang="en">
 
 <head>
+    <style>
+        .green {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Vert */
+        .orange {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* Orange */
+        .red {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Rouge */
+        .gray {
+            background-color: #e0e0e0;
+            color: #6c757d;
+        }
+
+        /* Gris pour offline */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+    </style>
+
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -135,28 +174,28 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                     <?php if ($currentPage === 'dashboard'): ?>
                         <!-- Dashboard Content -->
                         <?php
-    // Fetch operations for the calendar
-    require_once 'initialize_database.php';
-    $stmt = $pdo->prepare("SELECT o.id, o.operation_type, o.scheduled_date, p.name AS patient_name, u.name AS doctor_name 
+                        // Fetch operations for the calendar
+                        require_once 'initialize_database.php';
+                        $stmt = $pdo->prepare("SELECT o.id, o.operation_type, o.scheduled_date, p.name AS patient_name, u.name AS doctor_name 
                            FROM Operations o
                            JOIN Patients p ON o.patient_id = p.patient_id
                            JOIN Users u ON o.doctor_id = u.id
                            ORDER BY o.scheduled_date ASC");
-    $stmt->execute();
-    $operations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
-    <!-- Dashboard Content -->
-    <p>Welcome to the admin dashboard.</p>
+                        $stmt->execute();
+                        $operations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        ?>
+                        <!-- Dashboard Content -->
+                        <p>Welcome to the admin dashboard.</p>
 
-    <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
-    <div id="calendar"></div>
+                        <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+                        <div id="calendar"></div>
                         <style>
-    #calendar {
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-    }
-</style>
+                            #calendar {
+                                max-width: 90%;
+                                margin: 0 auto;
+                                padding: 20px;
+                            }
+                        </style>
 
                     <?php elseif ($currentPage === 'register'): ?>
                         <!-- Register User Content -->
@@ -168,36 +207,36 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                     </div>
                                     <div class="card-body">
                                         <form method="POST" action="process_register.php">
-                                        <div class="form-group">
-    <label for="name">Full Name</label>
-    <input type="text" class="form-control" id="name" name="name" required>
-</div>
-<div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" name="email" required>
-</div>
-<div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" name="password" required>
-</div>
-<div class="form-group">
-    <label for="role">Role</label>
-    <select class="form-control" id="role" name="role" required>
-        <option value="doctor">Doctor</option>
-        <option value="admin">Admin</option>
-    </select>
-</div>
-<div class="form-group">
-    <label for="specialty">Specialty (For Doctors)</label>
-    <select class="form-control" id="specialty" name="specialty" disabled>
-        <option value="">Select Specialty</option>
-        <option value="General Surgery">General Surgery</option>
-        <option value="Cardiology">Cardiology</option>
-        <option value="Neurology">Neurology</option>
-        <option value="Orthopedics">Orthopedics</option>
-    </select>
-</div>
-<button type="submit" class="btn btn-primary">Register</button>
+                                            <div class="form-group">
+                                                <label for="name">Full Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="role">Role</label>
+                                                <select class="form-control" id="role" name="role" required>
+                                                    <option value="doctor">Doctor</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="specialty">Specialty (For Doctors)</label>
+                                                <select class="form-control" id="specialty" name="specialty" disabled>
+                                                    <option value="">Select Specialty</option>
+                                                    <option value="General Surgery">General Surgery</option>
+                                                    <option value="Cardiology">Cardiology</option>
+                                                    <option value="Neurology">Neurology</option>
+                                                    <option value="Orthopedics">Orthopedics</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Register</button>
                                         </form>
                                     </div>
                                 </div>
@@ -205,40 +244,45 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                         </div>
 
 
-                        <?php elseif ($currentPage === 'network-metrics'): ?>
-    <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
+                    <?php elseif ($currentPage === 'network-metrics'): ?>
+                        <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
 
-    <!-- Server Selection Buttons -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <button class="btn btn-primary btn-lg btn-block server-btn" onclick="changeRoute(1)">UK</button>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary btn-lg btn-block server-btn" onclick="changeRoute(2)">West Europe</button>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary btn-lg btn-block server-btn" onclick="changeRoute(3)">Paris</button>
-        </div>
-        
-        
-    </div>
+                        <!-- Server Selection Buttons -->
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-yellow-dark btn-lg btn-block server-btn" onclick="changeRoute(1)">UK</button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-yellow-dark btn-lg btn-block server-btn" onclick="changeRoute(2)">West Europe</button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-yellow-dark btn-lg btn-block server-btn" onclick="changeRoute(3)">Paris</button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-yellow-dark btn-lg btn-block server-btn" onclick="changeRoute(4)">Korea</button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-yellow-dark btn-lg btn-block server-btn" onclick="changeRoute(5)">US</button>
+                            </div>
 
-    <script>
-function changeRoute(routeNumber) {
-    fetch(`changeroute.php?route=${routeNumber}`)
-        .then(response => response.text())
-        .then(data => {
-            alert(data); // On affiche la réponse (Succès ou Erreur)
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Une erreur s'est produite");
-        });
-}
-</script>
+                        </div>
 
-    <!-- Table for Metrics -->
-    <h1 class="h3 mb-0 text-gray-800">Network Metrics</h1>
+                        <script>
+                            function changeRoute(routeNumber) {
+                                fetch(`changeroute.php?route=${routeNumber}`)
+                                    .then(response => response.text())
+                                    .then(data => {
+                                        alert(data); // On affiche la réponse (Succès ou Erreur)
+                                    })
+                                    .catch(err => {
+                                        console.error(err);
+                                        alert("Une erreur s'est produite");
+                                    });
+                            }
+                        </script>
+
+                        <!-- Table for Metrics -->
+                        <h1 class="h3 mb-0 text-gray-800">Network Metrics</h1>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card shadow mb-4">
@@ -251,224 +295,170 @@ function changeRoute(routeNumber) {
                                                 <tr>
                                                     <th>Robot ID</th>
                                                     <th>Latency</th>
-                                                    <th>Packet Loss</th>
                                                     <th>Bandwidth Usage</th>
                                                     <th>Connection Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="metrics-body">
                                                 <tr>
-                                                    <td colspan="6">Chargement des métriques...</td>
+                                                    <td colspan="4">Chargement des métriques...</td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <canvas id="latencyChart"></canvas>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Network Evolution</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="latencyChart"></canvas>
+                            </div>
+                        </div>
 
-    <script>
-        let selectedServer = null; // Store selected server
+                        <!-- Import Chart.js -->
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        function configureRoute(routeNumber) {
-            fetch(`http://10.20.75.188:5000/configure?route=${routeNumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message); // Show response message
-                    selectedServer = routeNumber;
-                    refreshMetrics(); // Load metrics for the selected route
-                })
-                .catch(error => console.error("Error configuring route:", error));
-        }
+                        <script>
+                            let selectedServer = null; // Store selected server
 
-            // Attach click event to each button
-        document.querySelectorAll('.server-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const routeNumber = button.getAttribute('data-route');
-                configureRoute(routeNumber);
-            });
-        });
-
-        // function refreshMetrics() {
-        //                         fetch("get_metrics.php")
-        //                             .then(response => response.json())
-        //                             .then(data => {
-        //                                 let html = `
-        //             <tr>
-        //                 <td>${data.robot_id || "N/A"}</td>
-        //                 <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
-        //                 <td>${data.packet_loss !== null ? data.packet_loss + " %" : "N/A"}</td>
-        //                 <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
-        //                 <td>${data.connection_status || "N/A"}</td>
-        //             </tr>
-        //         `;
-        //                                 document.getElementById("metrics-body").innerHTML = html;
-        //                             })
-        //                             .catch(error => {
-        //                                 console.error("Erreur lors de la récupération des métriques :", error);
-        //                                 document.getElementById("metrics-body").innerHTML = `
-        //             <tr><td colspan="6">Erreur de chargement des métriques.</td></tr>
-        //         `;
-        //                             });
-        //                     }
-
-        //                     // Rafraîchir toutes les 10 secondes
-        //                     setInterval(refreshMetrics, 10000);
-
-        //                     // Charger les métriques au démarrage
-        //                     refreshMetrics();
-
-        // document.querySelectorAll('.server-btn').forEach(button => {
-        //     button.addEventListener('click', function () {
-        //         const routeNumber = this.getAttribute('data-route');
-        //         configureRoute(routeNumber);
-        //     });
-        // });
-
-        // Refresh every 10 seconds
-        // setInterval(refreshMetrics, 10000);
-
-        // <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-let latencyData = [];
-let timeLabels = [];
-let chart = null;
-
-// Fonction pour initialiser le graphe
-function createChart() {
-    const ctx = document.getElementById("latencyChart").getContext("2d");
-    chart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: timeLabels,
-            datasets: [{
-                label: "Latence (ms)",
-                data: latencyData,
-                borderColor: "blue",
-                backgroundColor: "rgba(0, 0, 255, 0.1)",
-                borderWidth: 2,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: { title: { display: true, text: "Temps (s)" } },
-                y: { title: { display: true, text: "Latence (ms)" }, beginAtZero: false }
-            }
-        }
-    });
-}
-
-// Fonction pour récupérer les métriques et mettre à jour le graphe
-function refreshMetrics() {
-    fetch("get_metrics.php")
-        .then(response => response.json())
-        .then(data => {
-            let latency = data.latency;
-            if (latency !== null) {
-                let now = new Date().toLocaleTimeString();  // Heure actuelle
-                timeLabels.push(now);
-                latencyData.push(latency);
-
-                if (latencyData.length > 10) { // Garde seulement les 10 dernières valeurs
-                    latencyData.shift();
-                    timeLabels.shift();
-                }
-
-                chart.update();
-            }
-        })
-        .catch(error => console.error("Erreur lors de la récupération des métriques :", error));
-}
-
-// Créer le graphe au chargement
-createChart();
-
-// Rafraîchir toutes les 10 secondes
-setInterval(refreshMetrics, 10000);
-
-
-    </script>
-
-
-
-    </script>
-
-                        <?php elseif ($currentPage === 'operations'): ?>
-    <!-- Operations Management -->
-    <div class="container-fluid">
-    <?php if (isset($_GET['success'])): ?>
-        <?php if ($_GET['success'] == 1): ?>
-            <div class="alert alert-success" role="alert">
-                Operation added successfully!
-            </div>
-        <?php else: ?>
-            <div class="alert alert-danger" role="alert">
-                Failed to add the operation. Please try again.
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
-</div>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Plan an Operation</h6>
-            </div>
-            <div class="card-body">
-                <form method="POST" action="process_operations.php">
-                    <div class="form-group">
-                        <label for="patient">Select Patient</label>
-                        <select class="form-control" id="patient" name="patient" required>
-                            <?php
-                            require_once 'initialize_database.php';
-                            $stmt = $pdo->query("SELECT patient_id, name FROM Patients");
-                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<option value='{$row['patient_id']}'>{$row['name']}</option>";
+                            function configureRoute(routeNumber) {
+                                fetch(`http://10.20.75.188:5000/configure?route=${routeNumber}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        alert(data.message); // Show response message
+                                        selectedServer = routeNumber;
+                                        refreshMetrics(); // Load metrics for the selected route
+                                    })
+                                    .catch(error => console.error("Error configuring route:", error));
                             }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="doctor">Select Doctor</label>
-                        <select class="form-control" id="doctor" name="doctor" required>
-                            <?php
-                            $stmt = $pdo->prepare("SELECT id, name FROM Users WHERE role = 'doctor'");
-                            $stmt->execute();
-                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<option value='{$row['id']}'>{$row['name']}</option>";
+
+                            // Attach click event to each button
+                            document.querySelectorAll('.server-btn').forEach(button => {
+                                button.addEventListener('click', () => {
+                                    const routeNumber = button.getAttribute('data-route');
+                                    configureRoute(routeNumber);
+                                });
+                            });
+
+                            function refreshMetrics() {
+                                fetch("get_metrics.php")
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data); // Vérifie la sortie JSON dans la console
+
+                                        let colorClass = data.status_color || "gray"; // Si pas de couleur définie, mettre en gris
+                                        let latency = data.latency !== null ? data.latency + " ms" : "N/A";
+                                        let bandwidth = data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A";
+                                        let connection = data.connection_status || "Offline"; // Mettre "Offline" si pas de connexion
+                                        let html = `
+                        <tr class="${colorClass}">
+                            <td>${data.robot_id || "N/A"}</td>
+                            <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
+                            <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
+                            <td>${data.connection_status || "N/A"}</td>
+                        </tr>
+                    `;
+                                        document.getElementById("metrics-body").innerHTML = html;
+                                    })
+                                    .catch(error => {
+                                        console.error("Error fetching metrics:", error);
+                                        document.getElementById("metrics-body").innerHTML = `<tr><td colspan="4">Error loading metrics.</td></tr>`;
+                                    });
                             }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="operation_type">Operation Type</label>
-                        <select class="form-control" id="operation_type" name="operation_type" required>
-                            <option value="General Surgery">General Surgery</option>
-                            <option value="Cardiology">Cardiology</option>
-                            <option value="Neurology">Neurology</option>
-                            <option value="Orthopedics">Orthopedics</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="scheduled_date">Scheduled Date & Time</label>
-                        <input type="datetime-local" class="form-control" id="scheduled_date" name="scheduled_date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="comment">Comment</label>
-                        <textarea class="form-control" id="comment" name="comment"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Plan Operation</button>
-                    
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+                            // Rafraîchir toutes les 10 secondes
+                            setInterval(refreshMetrics, 10000);
+
+                            // Charger les métriques au démarrage
+                            refreshMetrics();
+
+                            document.querySelectorAll('.server-btn').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    const routeNumber = this.getAttribute('data-route');
+                                    configureRoute(routeNumber);
+                                });
+                            });
+                        </script>
+
+
+
+                        </script>
+
+                    <?php elseif ($currentPage === 'operations'): ?>
+                        <!-- Operations Management -->
+                        <div class="container-fluid">
+                            <?php if (isset($_GET['success'])): ?>
+                                <?php if ($_GET['success'] == 1): ?>
+                                    <div class="alert alert-success" role="alert">
+                                        Operation added successfully!
+                                    </div>
+                                <?php else: ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        Failed to add the operation. Please try again.
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Plan an Operation</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="POST" action="process_operations.php">
+                                            <div class="form-group">
+                                                <label for="patient">Select Patient</label>
+                                                <select class="form-control" id="patient" name="patient" required>
+                                                    <?php
+                                                    require_once 'initialize_database.php';
+                                                    $stmt = $pdo->query("SELECT patient_id, name FROM Patients");
+                                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                        echo "<option value='{$row['patient_id']}'>{$row['name']}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="doctor">Select Doctor</label>
+                                                <select class="form-control" id="doctor" name="doctor" required>
+                                                    <?php
+                                                    $stmt = $pdo->prepare("SELECT id, name FROM Users WHERE role = 'doctor'");
+                                                    $stmt->execute();
+                                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                        echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="operation_type">Operation Type</label>
+                                                <select class="form-control" id="operation_type" name="operation_type" required>
+                                                    <option value="General Surgery">General Surgery</option>
+                                                    <option value="Cardiology">Cardiology</option>
+                                                    <option value="Neurology">Neurology</option>
+                                                    <option value="Orthopedics">Orthopedics</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="scheduled_date">Scheduled Date & Time</label>
+                                                <input type="datetime-local" class="form-control" id="scheduled_date" name="scheduled_date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Comment</label>
+                                                <textarea class="form-control" id="comment" name="comment"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Plan Operation</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <script>
                             function refreshMetrics() {
                                 fetch("get_metrics.php")
@@ -546,65 +536,135 @@ setInterval(refreshMetrics, 10000);
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>
     <script>
-    document.getElementById('role').addEventListener('change', function () {
-        const specialtyField = document.getElementById('specialty');
-        if (this.value === 'doctor') {
-            specialtyField.disabled = false;
-        } else {
-            specialtyField.value = ''; // Réinitialiser la spécialité
-            specialtyField.disabled = true;
-        }
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Convert PHP operations array to JavaScript
-        const operations = <?php echo json_encode($operations); ?>;
-        
-        // Prepare events for FullCalendar
-        const events = operations.map(op => {
-            const today = new Date();
-            const operationDate = new Date(op.scheduled_date);
-            const daysDifference = Math.floor((operationDate - today) / (1000 * 60 * 60 * 24));
-
-            return {
-                id: op.id,
-                title: `${op.operation_type} - ${op.patient_name}`,
-                start: op.scheduled_date,
-                backgroundColor: daysDifference <= 3 ? 'red' : 'green', // Close operations in red, others in green
-                textColor: 'white',
-                extendedProps: {
-                    doctorName: op.doctor_name,
-                    patientName: op.patient_name,
-                    operationType: op.operation_type,
-                    scheduledDate: op.scheduled_date
-                }
-            };
+        document.getElementById('role').addEventListener('change', function() {
+            const specialtyField = document.getElementById('specialty');
+            if (this.value === 'doctor') {
+                specialtyField.disabled = false;
+            } else {
+                specialtyField.value = ''; // Réinitialiser la spécialité
+                specialtyField.disabled = true;
+            }
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert PHP operations array to JavaScript
+            const operations = <?php echo json_encode($operations); ?>;
 
-        // Render FullCalendar
-        const calendarEl = document.getElementById('calendar');
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek'
-            },
-            events: events,
-            eventClick: function (info) {
-                const { doctorName, patientName, operationType, scheduledDate } = info.event.extendedProps;
-                alert(`Operation Details:
+            // Prepare events for FullCalendar
+            const events = operations.map(op => {
+                const today = new Date();
+                const operationDate = new Date(op.scheduled_date);
+                const daysDifference = Math.floor((operationDate - today) / (1000 * 60 * 60 * 24));
+
+                return {
+                    id: op.id,
+                    title: `${op.operation_type} - ${op.patient_name}`,
+                    start: op.scheduled_date,
+                    backgroundColor: daysDifference <= 3 ? 'red' : 'green', // Close operations in red, others in green
+                    textColor: 'white',
+                    extendedProps: {
+                        doctorName: op.doctor_name,
+                        patientName: op.patient_name,
+                        operationType: op.operation_type,
+                        scheduledDate: op.scheduled_date
+                    }
+                };
+            });
+
+            // Render FullCalendar
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek'
+                },
+                events: events,
+                eventClick: function(info) {
+                    const {
+                        doctorName,
+                        patientName,
+                        operationType,
+                        scheduledDate
+                    } = info.event.extendedProps;
+                    alert(`Operation Details:
 Doctor: ${doctorName}
 Patient: ${patientName}
 Type: ${operationType}
 Scheduled Date: ${scheduledDate}`);
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+    <script>
+        let latencyData = []; // Stocke les valeurs de latence
+        let timeLabels = []; // Stocke les timestamps des mesures
+
+        // Configuration du graphique avec Chart.js
+        const ctx = document.getElementById('latencyChart').getContext('2d');
+        const latencyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timeLabels,
+                datasets: [{
+                    label: 'Latency (ms)',
+                    data: latencyData,
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Latency (ms)'
+                        },
+                        min: 0
+                    }
+                }
             }
         });
 
-        calendar.render();
-    });
-</script>
+        // Fonction pour récupérer et mettre à jour les données du graphique
+        function updateLatencyChart() {
+            fetch("get_metrics.php")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Latence actuelle :", data.latency);
+
+                    // Met à jour les données avec l'historique
+                    latencyData.length = 0;
+                    timeLabels.length = 0;
+                    data.history.forEach(entry => {
+                        let formattedTime = new Date(entry.time * 1000).toLocaleTimeString();
+                        timeLabels.push(formattedTime);
+                        latencyData.push(entry.latency);
+                    });
+
+                    latencyChart.update();
+                })
+                .catch(error => console.error("Erreur lors de la récupération des données :", error));
+        }
+
+        // Mettre à jour le graphique toutes les 10 secondes
+        setInterval(updateLatencyChart, 10000);
+
+        // Charger les métriques au démarrage
+        updateLatencyChart();
+    </script>
 
 </body>
 

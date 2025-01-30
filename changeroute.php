@@ -1,9 +1,11 @@
 <?php
 session_start();
 // Vérifier le rôle admin, etc.
-if (!isset($_SESSION['is_logged_in']) 
-    || $_SESSION['is_logged_in'] !== true 
-    || $_SESSION['user_role'] !== 'admin') {
+if (
+    !isset($_SESSION['is_logged_in'])
+    || $_SESSION['is_logged_in'] !== true
+    || $_SESSION['user_role'] !== 'admin'
+) {
     echo "Accès refusé";
     exit();
 }
@@ -14,16 +16,22 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 // Selon la route choisie, on construit la commande iptables
 switch ($route) {
     case '1':
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.4';
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.2';
         break;
     case '2':
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.5';
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.4';
         break;
     case '3':
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.12';
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.3';
+        break;
+    case '4':
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.0';
+        break;
+    case '5':
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.7 -p icmp -j DNAT --to-destination 10.8.0.0';
         break;
     default:
-        echo "Route invalide. Usage : ?route=1|2|3";
+        echo "Route invalide. Usage : ?route=1|2|3|4|5";
         exit();
 }
 
@@ -38,4 +46,3 @@ if ($return_var === 0) {
 } else {
     echo "Erreur lors de l'exécution de la commande : " . implode("\n", $output);
 }
-?>
