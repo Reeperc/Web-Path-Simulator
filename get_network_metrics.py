@@ -3,10 +3,10 @@ import subprocess
 import re
 import json
  
-# IP de destination pour tester le réseau
+# IP de destination pour tester le rï¿½seau
 DEST_IP = "10.8.0.7"
  
-# Fonction pour exécuter une commande et récupérer la sortie
+# Fonction pour exï¿½cuter une commande et rï¿½cupï¿½rer la sortie
 def run_command(command):
     try:
         result = subprocess.run(command, capture_output=True, text=True, shell=True, timeout=5)
@@ -14,7 +14,7 @@ def run_command(command):
     except Exception as e:
         return None
  
-# Fonction pour récupérer la latence depuis traceroute
+# Fonction pour rï¿½cupï¿½rer la latence depuis traceroute
 def get_traceroute_latency():
     output = run_command(f"traceroute -I -n {DEST_IP}")
     if output:
@@ -22,21 +22,31 @@ def get_traceroute_latency():
         return round(sum(latencies) / len(latencies), 2) if latencies else None
     return None
  
-# Fonction pour récupérer les métriques depuis iPerf (ancienne version)
+# Fonction pour rï¿½cupï¿½rer les mï¿½triques depuis iPerf (ancienne version)
 def get_iperf_metrics():
     output = run_command(f"iperf -c {DEST_IP}")
-    if not output:  # Vérifier que la sortie n'est pas vide
+    if not output:  # VÃ©rifier que la sortie n'est pas vide
         return None
-    # Recherche uniquement du débit (Bandwidth)
-    bandwidth_match = re.search(r"(\d+\.\d+|\d+)\s+Mbits/sec", output)
-    # Extraction des valeurs
-    bandwidth = float(bandwidth_match.group(1)) if bandwidth_match else None
-    return bandwidth
+    
+    print("iPerf Output:", output)  # DEBUG : Voir exactement la sortie de iperf
+
+    # Rechercher la ligne contenant "Mbits/sec" et extraire la derniÃ¨re valeur numÃ©rique avant "Mbits/sec"
+    for line in output.split("\n"):
+        if "Mbits/sec" in line:
+            parts = line.split()
+            try:
+                bandwidth = float(parts[-2])  # Dernier nombre avant "Mbits/sec"
+                return bandwidth
+            except ValueError:
+                pass
+
+    return None
+
  
-# Fonction pour déterminer la couleur en fonction des métriques
+# Fonction pour dï¿½terminer la couleur en fonction des mï¿½triques
 def get_status_color(latency, bandwidth):
     if latency is None or bandwidth is None:
-        return "gray"  # Si aucune donnée, mettre la ligne en gris
+        return "gray"  # Si aucune donnï¿½e, mettre la ligne en gris
     latency_score = "green" if latency < 50 else "orange" if latency <= 150 else "red"
     bandwidth_score = "green" if bandwidth > 50 else "orange" if bandwidth >= 10 else "red"
  
@@ -47,11 +57,11 @@ def get_status_color(latency, bandwidth):
     else:
         return "orange"
  
-# Exécution des commandes
+# Exï¿½cution des commandes
 latency = get_traceroute_latency()
 bandwidth = get_iperf_metrics()
  
-# Si aucune métrique n'est disponible, définir le statut comme hors ligne
+# Si aucune mï¿½trique n'est disponible, dï¿½finir le statut comme hors ligne
 if latency is None and bandwidth is None:
     connection_status = "Offline"
     color_status = "gray"
@@ -59,7 +69,7 @@ else:
     connection_status = "Online"
     color_status = get_status_color(latency, bandwidth)
  
-# Retourner les résultats sous forme de JSON
+# Retourner les rï¿½sultats sous forme de JSON
 metrics = {
     "robot_id": "robot_1",
     "latency": latency,
