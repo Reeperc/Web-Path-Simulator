@@ -262,6 +262,8 @@ function changeRoute(routeNumber) {
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <canvas id="latencyChart"></canvas>
+
                                     </div>
                                 </div>
                             </div>
@@ -289,44 +291,107 @@ function changeRoute(routeNumber) {
             });
         });
 
-        function refreshMetrics() {
-                                fetch("get_metrics.php")
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        let html = `
-                    <tr>
-                        <td>${data.robot_id || "N/A"}</td>
-                        <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
-                        <td>${data.packet_loss !== null ? data.packet_loss + " %" : "N/A"}</td>
-                        <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
-                        <td>${data.connection_status || "N/A"}</td>
-                    </tr>
-                `;
-                                        document.getElementById("metrics-body").innerHTML = html;
-                                    })
-                                    .catch(error => {
-                                        console.error("Erreur lors de la récupération des métriques :", error);
-                                        document.getElementById("metrics-body").innerHTML = `
-                    <tr><td colspan="6">Erreur de chargement des métriques.</td></tr>
-                `;
-                                    });
-                            }
+        // function refreshMetrics() {
+        //                         fetch("get_metrics.php")
+        //                             .then(response => response.json())
+        //                             .then(data => {
+        //                                 let html = `
+        //             <tr>
+        //                 <td>${data.robot_id || "N/A"}</td>
+        //                 <td>${data.latency !== null ? data.latency + " ms" : "N/A"}</td>
+        //                 <td>${data.packet_loss !== null ? data.packet_loss + " %" : "N/A"}</td>
+        //                 <td>${data.bandwidth_usage !== null ? data.bandwidth_usage + " Mbps" : "N/A"}</td>
+        //                 <td>${data.connection_status || "N/A"}</td>
+        //             </tr>
+        //         `;
+        //                                 document.getElementById("metrics-body").innerHTML = html;
+        //                             })
+        //                             .catch(error => {
+        //                                 console.error("Erreur lors de la récupération des métriques :", error);
+        //                                 document.getElementById("metrics-body").innerHTML = `
+        //             <tr><td colspan="6">Erreur de chargement des métriques.</td></tr>
+        //         `;
+        //                             });
+        //                     }
 
-                            // Rafraîchir toutes les 10 secondes
-                            setInterval(refreshMetrics, 10000);
+        //                     // Rafraîchir toutes les 10 secondes
+        //                     setInterval(refreshMetrics, 10000);
 
-                            // Charger les métriques au démarrage
-                            refreshMetrics();
+        //                     // Charger les métriques au démarrage
+        //                     refreshMetrics();
 
-        document.querySelectorAll('.server-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const routeNumber = this.getAttribute('data-route');
-                configureRoute(routeNumber);
-            });
-        });
+        // document.querySelectorAll('.server-btn').forEach(button => {
+        //     button.addEventListener('click', function () {
+        //         const routeNumber = this.getAttribute('data-route');
+        //         configureRoute(routeNumber);
+        //     });
+        // });
 
         // Refresh every 10 seconds
-        setInterval(refreshMetrics, 10000);
+        // setInterval(refreshMetrics, 10000);
+
+        // <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+let latencyData = [];
+let timeLabels = [];
+let chart = null;
+
+// Fonction pour initialiser le graphe
+function createChart() {
+    const ctx = document.getElementById("latencyChart").getContext("2d");
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: timeLabels,
+            datasets: [{
+                label: "Latence (ms)",
+                data: latencyData,
+                borderColor: "blue",
+                backgroundColor: "rgba(0, 0, 255, 0.1)",
+                borderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: "Temps (s)" } },
+                y: { title: { display: true, text: "Latence (ms)" }, beginAtZero: false }
+            }
+        }
+    });
+}
+
+// Fonction pour récupérer les métriques et mettre à jour le graphe
+function refreshMetrics() {
+    fetch("get_metrics.php")
+        .then(response => response.json())
+        .then(data => {
+            let latency = data.latency;
+            if (latency !== null) {
+                let now = new Date().toLocaleTimeString();  // Heure actuelle
+                timeLabels.push(now);
+                latencyData.push(latency);
+
+                if (latencyData.length > 10) { // Garde seulement les 10 dernières valeurs
+                    latencyData.shift();
+                    timeLabels.shift();
+                }
+
+                chart.update();
+            }
+        })
+        .catch(error => console.error("Erreur lors de la récupération des métriques :", error));
+}
+
+// Créer le graphe au chargement
+createChart();
+
+// Rafraîchir toutes les 10 secondes
+setInterval(refreshMetrics, 10000);
+
+
     </script>
 
 
