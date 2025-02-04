@@ -1,40 +1,83 @@
 <?php
+
 header('Content-Type: application/json');
+ 
+// Fichier où stocker l'historique des latences
 
-// Fichier oÃ¹ stocker l'historique des latences
 $history_file = "latency_history.json";
-
+ 
 // Lire l'historique existant
+
 $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
+ 
+// Exécuter le script Python pour récupérer la latence actuelle
 
-// ExÃ©cuter le script Python pour rÃ©cupÃ©rer la latence actuelle
-$command = "python3 /var/www/html/get_network_metrics.py"; // Modifier avec le bon chemin
+$command = "python3 /var/www/html/get_network_metrics.py"; // Vérifie le chemin correct
+
 $output = shell_exec($command);
+
 $data = json_decode($output, true);
+ 
+// Vérifier si la latence est disponible
 
-// VÃ©rifier si la latence est disponible
 if (isset($data["latency"])) {
+
     $latency = $data["latency"];
+
     $timestamp = time(); // Ajoute un timestamp
+ 
+    // Ajouter la nouvelle valeur à l'historique
 
-    // Ajouter la nouvelle valeur Ã  l'historique
     $history[] = ["time" => $timestamp, "latency" => $latency];
+ 
+    // Garder uniquement les 10 dernières valeurs
 
-    // Garder uniquement les 10 derniÃ¨res valeurs
     if (count($history) > 10) {
-        array_shift($history);
-    }
 
-    // Sauvegarder l'historique mis Ã  jour
+        array_shift($history);
+
+    }
+ 
+    // Sauvegarder l'historique mis à jour
+
     file_put_contents($history_file, json_encode($history));
+
 } else {
+
     $latency = null;
+
 }
+ 
+// Vérifier si connection_status est présent
 
 if (!isset($data["connection_status"])) {
-    $data["connection_status"] = "Unknown"; // Valeur par dÃ©faut si absent
+
+    $data["connection_status"] = "Unknown"; // Valeur par défaut si absent
+
 }
-// Retourner les donnÃ©es au format JSON
-echo json_encode(["latency" => $latency, "history" => $history]);
-echo json_encode($data);
+ 
+// Fusionner les données avant de les renvoyer
+
+$response = [
+
+    "latency" => $latency,
+
+    "history" => $history,
+
+    "connection_status" => $data["connection_status"],
+
+    "robot_id" => $data["robot_id"] ?? "Unknown",
+
+    "bandwidth_usage" => $data["bandwidth_usage"] ?? null,
+
+    "status_color" => $data["status_color"] ?? "gray"
+
+];
+ 
+// Retourner un JSON propre
+
+echo json_encode($response);
+
 ?>
+
+ 

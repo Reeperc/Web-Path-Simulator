@@ -15,21 +15,20 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 // Selon la route choisie, on construit la commande iptables
 switch ($route) {
-    case '1': //uk
-        //-d = ip du robot ;  --to-dest : ip du serveur -ici uk-
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.5';
+    case '1': //UK
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.2';
         break;
-    case '2': // we-----------------------
+    case '2': //West EUrope
         $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.4';
         break;
-    case '3': //paris(france)----------------
+    case '3': //Paris
         $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.5';
         break;
-    case '4': //korea
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.6';
+    case '4': //Korea
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.5';
         break;
-    case '5': //us
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.7';
+    case '5': //US
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.12';
         break;
     default:
         echo "Route invalide. Usage : ?route=1|2|3|4|5";
