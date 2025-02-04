@@ -26,41 +26,53 @@ foreach ($servers as $server) {
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let ctx = document.getElementById('comparisonChart').getContext('2d');
+    document.addEventListener("DOMContentLoaded", function () {
+        let ctx = document.getElementById('comparisonChart').getContext('2d');
 
-            let comparisonData = <?= json_encode($comparison_data); ?>;
-            let datasets = [];
-            let colors = ["red", "blue", "green", "orange", "purple"]; // Couleurs des serveurs
-
-            Object.keys(comparisonData).forEach((server, index) => {
-                let timestamps = comparisonData[server].map(entry => new Date(entry.time * 1000).toLocaleTimeString());
-                let latencies = comparisonData[server].map(entry => entry.latency);
-
-                datasets.push({
-                    label: server,
-                    data: latencies,
-                    borderColor: colors[index % colors.length],
-                    borderWidth: 2,
-                    fill: false
-                });
-            });
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: comparisonData[Object.keys(comparisonData)[0]].map(entry => new Date(entry.time * 1000).toLocaleTimeString()),
-                    datasets: datasets
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { title: { display: true, text: "Time" } },
-                        y: { title: { display: true, text: "Latency (ms)" }, beginAtZero: true }
-                    }
+        let comparisonChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: "Time" } },
+                    y: { title: { display: true, text: "Latency (ms)" }, beginAtZero: true }
                 }
-            });
+            }
         });
-    </script>
+
+        function updateComparisonChart() {
+            fetch("get_metrics.php")
+                .then(response => response.json())
+                .then(data => {
+                    let colors = ["red", "blue", "green", "orange", "purple"];
+                    let datasets = [];
+                    let timestamps = data.timestamps || [];
+
+                    Object.keys(data.servers).forEach((server, index) => {
+                        let latencies = data.servers[server] || [];
+                        datasets.push({
+                            label: server,
+                            data: latencies,
+                            borderColor: colors[index % colors.length],
+                            borderWidth: 2,
+                            fill: false
+                        });
+                    });
+
+                    comparisonChart.data.labels = timestamps;
+                    comparisonChart.data.datasets = datasets;
+                    comparisonChart.update();
+                })
+                .catch(error => console.error("Error fetching real-time data:", error));
+        }
+
+        setInterval(updateComparisonChart, 500); // Mise à jour toutes les 500 ms (0.5s)
+        updateComparisonChart();
+    });
+</script>
 </body>
 </html>

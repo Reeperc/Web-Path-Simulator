@@ -111,8 +111,6 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                 </a>
             </li>
 
-       
-
 
             <!-- Network Metrics -->
             <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
@@ -244,9 +242,7 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                 </div>
                             </div>
                         </div>
-                        
-                    <?php elseif ($currentPage === 'network-comparison'): ?>
-                        <?php include 'network_comparison.php'; ?>
+
 
                     <?php elseif ($currentPage === 'network-metrics'): ?>
                         <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
@@ -318,7 +314,8 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                 <h6 class="m-0 font-weight-bold text-primary">Network Evolution</h6>
                             </div>
                             <div class="card-body">
-                                 <?php include "network_comparison.php"; ?>
+                                <?php include "network_comparison.php"; ?>
+
                             </div>
                         </div>
 
@@ -604,71 +601,7 @@ Scheduled Date: ${scheduledDate}`);
             calendar.render();
         });
     </script>
-    <!-- <script>
-        let latencyData = []; // Stocke les valeurs de latence
-        let timeLabels = []; // Stocke les timestamps des mesures
 
-        // Configuration du graphique avec Chart.js
-        const ctx = document.getElementById('latencyChart').getContext('2d');
-        const latencyChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: timeLabels,
-                datasets: [{
-                    label: 'Latency (ms)',
-                    data: latencyData,
-                    borderColor: 'blue',
-                    backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Time'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Latency (ms)'
-                        },
-                        min: 0
-                    }
-                }
-            }
-        });
-
-        // Fonction pour récupérer et mettre à jour les données du graphique
-        function updateLatencyChart() {
-            fetch("get_metrics.php")
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Latence actuelle :", data.latency);
-
-                    // Met à jour les données avec l'historique
-                    latencyData.length = 0;
-                    timeLabels.length = 0;
-                    data.history.forEach(entry => {
-                        let formattedTime = new Date(entry.time * 1000).toLocaleTimeString();
-                        timeLabels.push(formattedTime);
-                        latencyData.push(entry.latency);
-                    });
-
-                    latencyChart.update();
-                })
-                .catch(error => console.error("Erreur lors de la récupération des données :", error));
-        }
-
-        // Mettre à jour le graphique toutes les 10 secondes
-        setInterval(updateLatencyChart, 10000);
-
-        // Charger les métriques au démarrage
-        updateLatencyChart();
-    </script> -->
 
 </body>
 
