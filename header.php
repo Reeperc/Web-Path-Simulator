@@ -56,6 +56,13 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
                     <span>Register User</span>
                 </a>
             </li>
+            
+            <li class="nav-item <?= $currentPage === 'network-comparison' ? 'active' : '' ?>">
+                <a class="nav-link" href="indexadmin.php?page=network-comparison">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Network Comparison</span>
+                </a>
+            </li>
 
             <!-- Network Metrics -->
             <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">

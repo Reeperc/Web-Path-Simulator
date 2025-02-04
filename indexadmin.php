@@ -111,6 +111,13 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                 </a>
             </li>
 
+            <li class="nav-item <?= $currentPage === 'network-comparison' ? 'active' : '' ?>">
+                <a class="nav-link" href="indexadmin.php?page=network-comparison">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Network Comparison</span>
+                </a>
+            </li>
+
 
             <!-- Network Metrics -->
             <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
@@ -242,7 +249,9 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                 </div>
                             </div>
                         </div>
-
+                        
+                    <?php elseif ($currentPage === 'network-comparison'): ?>
+                        <?php include 'network_comparison.php'; ?>
 
                     <?php elseif ($currentPage === 'network-metrics'): ?>
                         <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>

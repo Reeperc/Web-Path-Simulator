@@ -1,83 +1,90 @@
 <?php
-
 header('Content-Type: application/json');
- 
-// Fichier où stocker l'historique des latences
 
-$history_file = "latency_history.json";
- 
-// Lire l'historique existant
+// Liste des serveurs disponibles
+$all_servers = ['UK', 'WestEurope', 'Paris', 'Korea', 'US'];
 
+// Mode comparaison : si le paramÃ¨tre compare=true est passÃ© dans l'URL
+$compare_mode = isset($_GET['compare']) && $_GET['compare'] === 'true';
+
+if ($compare_mode) {
+    $comparison_data = [];
+
+    foreach ($all_servers as $server) {
+        $history_file = "latency_history_{$server}.json";
+        $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
+
+        // Si l'historique est vide, on initialise avec une entrÃ©e nulle
+        if (empty($history)) {
+            $history = [["time" => time(), "latency" => null]];
+        }
+
+        $last_entry = end($history);
+        $comparison_data[$server] = [
+            "latest_latency" => isset($last_entry["latency"]) ? $last_entry["latency"] : null,
+            "latest_time"    => isset($last_entry["time"]) ? date("H:i:s", $last_entry["time"]) : "N/A",
+            "history"        => $history
+        ];
+    }
+
+    echo json_encode(["comparison" => $comparison_data]);
+    exit(); // On s'arrÃªte ici en mode comparaison
+}
+
+// Mode par dÃ©faut (pour un seul serveur)
+$server = isset($_GET['server']) ? $_GET['server'] : 'UK';
+$history_file = "latency_history_{$server}.json";
+
+// Lire l'historique existant pour ce serveur
 $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
- 
-// Exécuter le script Python pour récupérer la latence actuelle
 
-$command = "python3 /var/www/html/get_network_metrics.py"; // Vérifie le chemin correct
-
+// ExÃ©cuter le script Python pour rÃ©cupÃ©rer la latence actuelle
+$command = "python3 /var/www/html/get_network_metrics.py"; // Assurez-vous que le chemin est correct
 $output = shell_exec($command);
-
 $data = json_decode($output, true);
- 
-// Vérifier si la latence est disponible
 
+// Si la latence est disponible, mettre Ã  jour l'historique
 if (isset($data["latency"])) {
-
     $latency = $data["latency"];
-
-    $timestamp = time(); // Ajoute un timestamp
- 
-    // Ajouter la nouvelle valeur à l'historique
+    $timestamp = time(); // Timestamp UNIX
 
     $history[] = ["time" => $timestamp, "latency" => $latency];
- 
-    // Garder uniquement les 10 dernières valeurs
 
+    // Garder uniquement les 10 derniÃ¨res valeurs
     if (count($history) > 10) {
-
         array_shift($history);
-
     }
- 
-    // Sauvegarder l'historique mis à jour
 
+    // Si l'historique est vide (au cas improbable), on l'initialise
+    if (empty($history)) {
+        $history = [["time" => time(), "latency" => null]];
+    }    
+
+    // Sauvegarder l'historique mis Ã  jour
     file_put_contents($history_file, json_encode($history));
-
 } else {
-
     $latency = null;
-
 }
- 
-// Vérifier si connection_status est présent
 
 if (!isset($data["connection_status"])) {
-
-    $data["connection_status"] = "Unknown"; // Valeur par défaut si absent
-
+    $data["connection_status"] = "Unknown"; // Valeur par dÃ©faut si absente
 }
- 
-// Fusionner les données avant de les renvoyer
 
-$response = [
+// PrÃ©parer les donnÃ©es pour le graphique : formatage des timestamps et des valeurs
+$timestamps = [];
+$latencyValues = [];
+foreach ($history as $entry) {
+    $timestamps[] = date("H:i:s", $entry["time"]); // Format lisible
+    $latencyValues[] = $entry["latency"];
+}
 
-    "latency" => $latency,
-
-    "history" => $history,
-
-    "connection_status" => $data["connection_status"],
-
-    "robot_id" => $data["robot_id"] ?? "Unknown",
-
-    "bandwidth_usage" => $data["bandwidth_usage"] ?? null,
-
-    "status_color" => $data["status_color"] ?? "gray"
-
-];
- 
-// Retourner un JSON propre
+// Fusionner les donnÃ©es du script Python et l'historique
+$response = array_merge($data, [
+    "latency"      => $latency,
+    "history"      => $history,
+    "timestamps"   => $timestamps,
+    "latencyValues"=> $latencyValues
+]);
 
 echo json_encode($response);
-
 ?>
-
- 

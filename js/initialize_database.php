@@ -34,7 +34,7 @@ try {
             report_content TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (generated_by) REFERENCES Users(id)
-        )";
+        )",
         
         "CREATE TABLE IF NOT EXISTS Doctors (
             doctor_id INT PRIMARY KEY AUTO_INCREMENT,
