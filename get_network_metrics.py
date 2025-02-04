@@ -8,7 +8,7 @@ import json
  
 # IP de destination pour tester le réseau
 
-DEST_IP = "10.8.0.9"
+DEST_IP = "10.8.0.3"
  
 # Fonction pour exécuter une commande et récupérer la sortie
 
