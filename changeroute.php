@@ -17,12 +17,12 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 switch ($route) {
     case '1': //uk
         //-d = ip du robot ;  --to-dest : ip du serveur -ici uk-
-        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.2';
+        $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.5';
         break;
-    case '2': // we
+    case '2': // we-----------------------
         $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.4';
         break;
-    case '3': //paris(france)
+    case '3': //paris(france)----------------
         $command = 'sudo iptables -t nat -F && sudo iptables -t nat -A OUTPUT -d 10.8.0.3 -p icmp -j DNAT --to-destination 10.8.0.5';
         break;
     case '4': //korea
