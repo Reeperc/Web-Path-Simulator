@@ -39,7 +39,7 @@ $history_file = "latency_history_{$server}.json";
 $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
 
 // Exécuter le script Python pour récupérer la latence actuelle
-$command = "python3 /var/www/html/get_network_metrics.py"; // Assurez-vous que le chemin est correct
+$command = "python3 /var/www/html/get_network_metrics2.py"; // Assurez-vous que le chemin est correct
 $output = shell_exec($command);
 $data = json_decode($output, true);
 
