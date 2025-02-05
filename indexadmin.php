@@ -110,7 +110,13 @@ include 'trucainclure.php';
             </a>
         </li>
 
-        
+        <!-- Network Comparison -->
+        <li class="nav-item <?= $currentPage === 'network-comparison' ? 'active' : '' ?>">
+            <a class="nav-link" href="indexadmin.php?page=network-comparison">
+                <i class="fas fa-chart-line"></i>
+                <span>Network Comparison</span>
+            </a>
+        </li>
 
         <!-- Network Metrics -->
         <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
@@ -250,197 +256,167 @@ include 'trucainclure.php';
                         </div>
                     </div>
 
-                
+                <!-- NETWORK COMPARISON -->
+                <?php elseif ($currentPage === 'network-comparison'): ?>
+                    <?php include 'network_comparison.php'; ?>
 
                 <!-- NETWORK METRICS -->
                 <?php elseif ($currentPage === 'network-metrics'): ?>
-                    <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
+    <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
+    
+    <!-- BOUTONS START/STOP -->
+    <button id="startBtn" class="btn btn-success">Start</button>
+    <button id="stopBtn" class="btn btn-danger">Stop</button>
+    
+    <!-- GRAPHE -->
+    <div style="max-width: 700px; margin-top: 30px;">
+        <canvas id="latencyChart"></canvas>
+    </div>
+    
+    <!-- TABLEAU -->
+    <table class="table table-bordered" style="margin-top: 20px; width: 400px;">
+        <thead>
+            <tr>
+                <th>Robot ID</th>
+                <th>Latency (ms)</th>
+                <th>Bandwidth (Mbits/s)</th>
+                <th>Connection Status</th>
+            </tr>
+        </thead>
+        <tbody id="metricsTableBody">
+            <!-- Dynamique -->
+        </tbody>
+    </table>
+    
+    <!-- Chart.js (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+    // -------------------------------------------------------------------------
+    // CHART
+    // -------------------------------------------------------------------------
+    const ctx = document.getElementById('latencyChart').getContext('2d');
+    const chartData = {
+        labels: [],
+        datasets: [
+            {
+                label: 'Latency RobotA (ms)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                fill: false,
+            },
+            {
+                label: 'Latency RobotB (ms)',
+                data: [],
+                borderColor: 'rgb(255, 99, 132)',
+                fill: false,
+            },
+        ]
+    };
 
-                    <!-- Boutons Start / Stop -->
-                    <button id="startBtn" class="btn btn-success">Start</button>
-                    <button id="stopBtn" class="btn btn-danger">Stop</button>
+    const latencyChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            scales: {
+                x: { title: { display: true, text: 'Time' } },
+                y: { title: { display: true, text: 'Latency (ms)' } }
+            }
+        }
+    });
 
-                    <!-- Conteneur du tableau des performances -->
-                    <div class="mt-4" id="performanceTableContainer"></div>
+    // -------------------------------------------------------------------------
+    // BOUTONS START/STOP
+    // -------------------------------------------------------------------------
+    let pollingInterval = null;
 
-                    <!-- Canvas pour le graphe de latence -->
-                    <canvas id="latencyChart" width="400" height="200"></canvas>
+    document.getElementById('startBtn').addEventListener('click', () => {
+        fetch('ajax_network.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'start' })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            startPolling();
+        })
+        .catch(err => console.error(err));
+    });
 
-                    <!-- Chart.js -->
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    document.getElementById('stopBtn').addEventListener('click', () => {
+        fetch('ajax_network.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'stop' })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            stopPolling();
+        })
+        .catch(err => console.error(err));
+    });
 
-                    <script>
-                    // Variable pour stocker l'ID de l'intervalle
-                    let intervalId = null;
-                    // Heure de démarrage (en millisecondes) pour calculer le temps écoulé
-                    let startTime = null;
+    function startPolling() {
+        if (!pollingInterval) {
+            pollingInterval = setInterval(fetchMetrics, 2000); // ex: toutes les 2s
+        }
+    }
 
-                    // Historique de latence pour Chart.js
-                    let latencyHistory = {
-                        labels: [],      // Exemple : "0.0", "3.0", "6.0" (secondes écoulées)
-                        dataRobotA: [],  // latences Robot A
-                        dataRobotB: []   // latences Robot B
-                    };
+    function stopPolling() {
+        if (pollingInterval) {
+            clearInterval(pollingInterval);
+            pollingInterval = null;
+        }
+    }
 
-                    // Initialisation du graphe Chart.js
-                    const ctx = document.getElementById('latencyChart').getContext('2d');
-                    const latencyChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                        labels: latencyHistory.labels,
-                        datasets: [
-                            {
-                            label: 'Latency Robot A (10.8.3.3)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            data: latencyHistory.dataRobotA,
-                            fill: false
-                            },
-                            {
-                            label: 'Latency Robot B (10.9.3.3)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            data: latencyHistory.dataRobotB,
-                            fill: false
-                            }
-                        ]
-                        },
-                        options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                            title: {
-                                display: true,
-                                text: 'Time (seconds)'
-                            }
-                            },
-                            y: {
-                            title: {
-                                display: true,
-                                text: 'Latency (ms)'
-                            },
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
+    // -------------------------------------------------------------------------
+    // FETCH METRICS POUR LE GRAPHE ET LE TABLEAU
+    // -------------------------------------------------------------------------
+    function fetchMetrics() {
+        fetch('ajax_network.php?action=get_data')
+            .then(res => res.json())
+            .then(data => {
+                // data = { timestamp, robots: [ { id, latency, bandwidth, status }, ... ] }
 
-                    /**
-                     * Quand on clique sur "Start"
-                     * - On reset l’historique
-                     * - On lance un intervalle qui fetch toutes les X secondes
-                     */
-                    document.getElementById('startBtn').addEventListener('click', function() {
-                        // Éviter de lancer plusieurs fois
-                        if (intervalId === null) {
-                        // Réinitialiser l’historique et le graphique
-                        resetMetricsHistory();
-                        startTime = Date.now(); 
-                        
-                        // Faire un premier fetch immédiatement
-                        fetchMetrics();
+                const timeLabel = new Date(data.timestamp * 1000).toLocaleTimeString();
 
-                        // Ensuite, en faire un périodique (toutes les 5 secondes, par ex.)
-                        intervalId = setInterval(fetchMetrics, 5000);
-                        }
-                    });
+                // Extraire RobotA & RobotB
+                const robotA = data.robots[0];
+                const robotB = data.robots[1];
 
-                    /**
-                     * Quand on clique sur "Stop"
-                     * - On arrête le setInterval (plus de ping)
-                     */
-                    document.getElementById('stopBtn').addEventListener('click', function() {
-                        if (intervalId !== null) {
-                        clearInterval(intervalId);
-                        intervalId = null;
-                        }
-                    });
+                // 1) Mettre à jour le chart
+                chartData.labels.push(timeLabel);
+                chartData.datasets[0].data.push(robotA.latency);
+                chartData.datasets[1].data.push(robotB.latency);
 
-                    /**
-                     * Fonction qui envoie la requête fetch pour pinger/iperf (backend)
-                     */
-                    function fetchMetrics() {
-                        fetch('indexadmin.php?page=network-metrics', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'action=refresh'
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                        // data contient { robots: [ {id, latency, bandwidth, status}, ... ] }
-                        updatePerformanceTable(data.robots);
-                        updateLatencyChart(data.robots);
-                        })
-                        .catch(err => console.error('Erreur lors de la récupération des métriques :', err));
-                    }
+                // Pour éviter d'avoir un historique infini, on limite à 20 points
+                if (chartData.labels.length > 20) {
+                    chartData.labels.shift();
+                    chartData.datasets[0].data.shift();
+                    chartData.datasets[1].data.shift();
+                }
 
-                    /**
-                     * Mettre à jour le tableau HTML
-                     */
-                    function updatePerformanceTable(robots) {
-                        const container = document.getElementById('performanceTableContainer');
-                        container.innerHTML = '';
+                latencyChart.update();
 
-                        const table = document.createElement('table');
-                        table.classList.add('table', 'table-bordered');
-
-                        const thead = document.createElement('thead');
-                        thead.innerHTML = `
-                        <tr>
-                            <th>Robot ID</th>
-                            <th>Latency (ms)</th>
-                            <th>Bandwidth Usage</th>
-                            <th>Connection Status</th>
-                        </tr>
-                        `;
-                        table.appendChild(thead);
-
-                        const tbody = document.createElement('tbody');
-                        robots.forEach(robot => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${robot.id}</td>
-                            <td>${robot.latency}</td>
-                            <td>${robot.bandwidth}</td>
-                            <td>${robot.status}</td>
-                        `;
-                        tbody.appendChild(tr);
-                        });
-                        table.appendChild(tbody);
-                        container.appendChild(table);
-                    }
-
-                    /**
-                     * Mettre à jour le graphique (x = temps écoulé, y = latences)
-                     */
-                    function updateLatencyChart(robots) {
-                        // Calcul du temps écoulé en secondes depuis le Start
-                        const elapsedSec = (Date.now() - startTime) / 1000;
-                        latencyHistory.labels.push(elapsedSec.toFixed(1)); // ex: "5.0"
-
-                        // Récupère latence Robot A et B
-                        const robotA = robots.find(r => r.id.includes('10.8.3.3'));
-                        const robotB = robots.find(r => r.id.includes('10.9.3.3'));
-
-                        latencyHistory.dataRobotA.push(parseFloat(robotA.latency) || 0);
-                        latencyHistory.dataRobotB.push(parseFloat(robotB.latency) || 0);
-
-                        // Mise à jour du graphique
-                        latencyChart.update();
-                    }
-
-                    /**
-                     * Remet à zéro l’historique (au moment où on clique sur Start)
-                     */
-                    function resetMetricsHistory() {
-                        latencyHistory.labels = [];
-                        latencyHistory.dataRobotA = [];
-                        latencyHistory.dataRobotB = [];
-                        latencyChart.update();
-                    }
-                    </script>
+                // 2) Mettre à jour le tableau
+                const tbody = document.getElementById('metricsTableBody');
+                tbody.innerHTML = '';
+                data.robots.forEach(robot => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${robot.id}</td>
+                        <td>${robot.latency.toFixed(2)}</td>
+                        <td>${robot.bandwidth.toFixed(2)}</td>
+                        <td>${robot.status}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => console.error(err));
+    }
+    </script>
 
                 <!-- OPERATIONS PAGE -->
                 <?php elseif ($currentPage === 'operations'): ?>
