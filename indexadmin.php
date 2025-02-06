@@ -264,6 +264,7 @@ include 'trucainclure.php';
                     </div>
 
                 <!-- NETWORK METRICS -->
+<!-- NETWORK METRICS -->
 <?php elseif ($currentPage === 'network-metrics'): ?>
 <h1 class="h3 mb-4 text-gray-800 text-center">Network Metrics</h1>
 
@@ -271,13 +272,11 @@ include 'trucainclure.php';
 <style>
     /* ------------------------ BODY / GLOBAL ------------------------ */
     body {
-        /* Exemple de fond en dégradé un peu "futuriste" */
         background: linear-gradient(135deg, #2c3e50 0%, #4CA1AF 100%);
         font-family: Arial, sans-serif;
         color: #fff;
     }
 
-    /* Centrage global d'une partie du contenu, optionnel */
     .network-metrics-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -301,13 +300,13 @@ include 'trucainclure.php';
     }
     .route-diagram {
         margin: 20px 0;
-        background-color: rgba(255, 255, 255, 0.1); /* léger fond translucide */
+        background-color: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         padding: 20px;
-        backdrop-filter: blur(5px); /* effet vitre */
+        backdrop-filter: blur(5px);
         width: 100%;
         max-width: 900px;
-        overflow-x: auto; /* scroll horizontal si écran trop petit */
+        overflow-x: auto;
     }
     .route-container h2 {
         margin-top: 10px;
@@ -335,7 +334,7 @@ include 'trucainclure.php';
         stroke: #2ecc71;
     }
     .server-text {
-        fill:rgb(255, 255, 255);
+        fill: #ecf0f1;
         font-size: 14px;
         font-weight: bold;
         pointer-events: none;
@@ -367,15 +366,48 @@ include 'trucainclure.php';
     }
 
     /* ------------------------ BOUTONS START/STOP ------------------------ */
-    #startBtn, #stopBtn {
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
+    /* Boostrap + style perso */
+    .btn-custom {
+        font-size: 1.2rem;
+        padding: 0.8rem 2rem;
         margin: 0.5rem;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
         box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+    /* Exemple de gradient pour Start */
+    .btn-start {
+        background: linear-gradient(to right, #16a085, #1abc9c);
+        color: #fff;
+    }
+    .btn-start:hover {
+        background: linear-gradient(to right, #1abc9c, #2ecc71);
+    }
+    /* Exemple de gradient pour Stop */
+    .btn-stop {
+        background: linear-gradient(to right, #c0392b, #e74c3c);
+        color: #fff;
+    }
+    .btn-stop:hover {
+        background: linear-gradient(to right, #e74c3c, #e67e22);
     }
 
     /* ------------------------ GRAPHE ------------------------ */
+    /* On force une hauteur plus importante et on laisse la largeur prendre la place dispo */
+    #chartContainer {
+        width: 100%;
+        max-width: 900px; /* Ajuste si tu veux plus grand ou plus petit */
+        margin: 30px auto;
+    }
     #latencyChart {
+        width: 100%;     /* Chart.js respectera la taille du parent pour la largeur */
+        height: 400px;   /* Hauteur fixe pour avoir de la place */
         background: rgba(255,255,255,0.1);
         border-radius: 10px;
         padding: 1rem;
@@ -396,6 +428,7 @@ include 'trucainclure.php';
     }
     .table thead {
         background-color: #3498db;
+        border: none;
     }
     .table thead th {
         border: none !important;
@@ -417,20 +450,16 @@ include 'trucainclure.php';
     .latency-red {
         background-color: rgba(231, 76, 60, 0.2) !important;
     }
-
-    .textetitre {
-        color: #3498db
-
-    }
 </style>
 
 <div class="network-metrics-container">
+
     <!-- DIAGRAMMES DES ROUTES -->
     <div class="route-container">
         <!-- Route 1 : US - Italy - Korea - UK -->
-        <h2 class="textetitre" >Route 1 : US - Italy - Korea - UK</h2>
+        <h2>Route 1 : US - Italy - Korea - UK</h2>
         <div class="route-diagram">
-            <svg width="900" height="200">
+            <svg width="900" height="300">
                 <defs>
                     <!-- Dégradé radial pour l'effet lumineux -->
                     <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
@@ -466,9 +495,9 @@ include 'trucainclure.php';
         </div>
 
         <!-- Route 2 : US - Poland - Portugal - UK -->
-        <h2 class="textetitre" >Route 2 : US - Poland - Portugal - UK</h2>
+        <h2>Route 2 : US - Poland - Portugal - UK</h2>
         <div class="route-diagram">
-            <svg width="900" height="200">
+            <svg width="900" height="300">
                 <defs>
                     <!-- Même dégradé utilisé pour les serveurs -->
                     <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
@@ -506,12 +535,12 @@ include 'trucainclure.php';
 
     <!-- BOUTONS START/STOP -->
     <div class="text-center">
-        <button id="startBtn" class="btn btn-success btn-lg">Start</button>
-        <button id="stopBtn" class="btn btn-danger btn-lg">Stop</button>
+        <button id="startBtn" class="btn btn-custom btn-start">Start</button>
+        <button id="stopBtn" class="btn btn-custom btn-stop">Stop</button>
     </div>
 
-    <!-- GRAPHE -->
-    <div style="max-width: 700px; margin: 30px auto;">
+    <!-- GRAPHE (responsive et plus grand) -->
+    <div id="chartContainer">
         <canvas id="latencyChart"></canvas>
     </div>
 
@@ -561,9 +590,21 @@ include 'trucainclure.php';
         type: 'line',
         data: chartData,
         options: {
+            responsive: true,         // Rend le chart responsive
+            maintainAspectRatio: false, // Permet de remplir le container en hauteur
             scales: {
-                x: { title: { display: true, text: 'Time' } },
-                y: { title: { display: true, text: 'Latency (ms)' } }
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Latency (ms)'
+                    }
+                }
             }
         }
     });
@@ -635,7 +676,7 @@ include 'trucainclure.php';
 
                 const timeLabel = new Date(data.timestamp * 1000).toLocaleTimeString();
 
-                // Extraire RobotA & RobotB (exemple)
+                // Extraire RobotA & RobotB
                 const robotA = data.robots[0];
                 const robotB = data.robots[1];
 
@@ -670,6 +711,7 @@ include 'trucainclure.php';
             .catch(err => console.error(err));
     }
 </script>
+
 
 
                 <!-- OPERATIONS PAGE -->
