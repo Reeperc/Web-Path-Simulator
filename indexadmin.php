@@ -49,6 +49,19 @@ include 'trucainclure.php';
             border: 1px solid #ddd;
             text-align: center;
         }
+        .latency-green {
+            background-color: #d4edda; /* vert clair */
+            color: #155724;           /* texte vert foncé */
+        }
+        .latency-orange {
+            background-color: #fff3cd; /* orange clair */
+            color: #856404;            /* texte orange foncé */
+        }
+        .latency-red {
+            background-color: #f8d7da; /* rouge clair */
+            color: #721c24;            /* texte rouge foncé */
+        }
+
     </style>
 
     <meta charset="utf-8">
@@ -110,13 +123,7 @@ include 'trucainclure.php';
             </a>
         </li>
 
-        <!-- Network Comparison -->
-        <li class="nav-item <?= $currentPage === 'network-comparison' ? 'active' : '' ?>">
-            <a class="nav-link" href="indexadmin.php?page=network-comparison">
-                <i class="fas fa-chart-line"></i>
-                <span>Network Comparison</span>
-            </a>
-        </li>
+        
 
         <!-- Network Metrics -->
         <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
@@ -256,14 +263,143 @@ include 'trucainclure.php';
                         </div>
                     </div>
 
-                <!-- NETWORK COMPARISON -->
-                <?php elseif ($currentPage === 'network-comparison'): ?>
-                    <?php include 'network_comparison.php'; ?>
+                
 
                 <!-- NETWORK METRICS -->
                 <?php elseif ($currentPage === 'network-metrics'): ?>
     <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
     
+    <!-- DIAGRAMMES DES ROUTES -->
+    <style>
+      /* Styles spécifiques aux diagrammes de routes */
+      .route-container {
+          margin-bottom: 40px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      .route-diagram {
+          margin: 20px 0;
+      }
+      svg {
+          overflow: visible;
+      }
+      /* Styles des "serveurs" (étapes géographiques) */
+      .server {
+          fill: url(#gradient);
+          stroke: #3498db;
+          stroke-width: 2;
+          filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.5));
+      }
+      .server-text {
+          fill: #ecf0f1;
+          font-size: 16px;
+          font-weight: bold;
+          pointer-events: none;
+      }
+      /* Animation de pulsation subtile */
+      .pulse {
+          transform-origin: center;
+          transform-box: fill-box;
+          animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+          0%   { transform: scale(1);   opacity: 0.95; }
+          50%  { transform: scale(1.02); opacity: 1; }
+          100% { transform: scale(1);   opacity: 0.95; }
+      }
+      /* Animation et style des lignes de connexion */
+      .line {
+          fill: none;
+          stroke: #e74c3c;
+          stroke-width: 4;
+          stroke-dasharray: 10;
+          stroke-dashoffset: 0;
+          animation: dash 2s linear infinite;
+      }
+      @keyframes dash {
+          to { stroke-dashoffset: -20; }
+      }
+    </style>
+    
+    <div class="route-container">
+      <!-- Route 1 : US - Italy - Korea - UK -->
+      <h2>Route 1 : US - Italy - Korea - UK</h2>
+      <div class="route-diagram">
+        <svg width="900" height="300">
+          <defs>
+            <!-- Dégradé radial pour l'effet lumineux -->
+            <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#1abc9c"/>
+              <stop offset="100%" stop-color="#16a085"/>
+            </radialGradient>
+          </defs>
+          <!-- US -->
+          <g class="pulse">
+            <rect class="server" x="50" y="100" width="120" height="60" rx="10" ry="10"/>
+            <text x="110" y="135" text-anchor="middle" class="server-text">US</text>
+          </g>
+          <!-- Italy -->
+          <g class="pulse">
+            <rect class="server" x="230" y="50" width="120" height="60" rx="10" ry="10"/>
+            <text x="290" y="85" text-anchor="middle" class="server-text">Italy</text>
+          </g>
+          <!-- Korea -->
+          <g class="pulse">
+            <rect class="server" x="410" y="100" width="120" height="60" rx="10" ry="10"/>
+            <text x="470" y="135" text-anchor="middle" class="server-text">Korea</text>
+          </g>
+          <!-- UK -->
+          <g class="pulse">
+            <rect class="server" x="590" y="50" width="120" height="60" rx="10" ry="10"/>
+            <text x="650" y="85" text-anchor="middle" class="server-text">UK</text>
+          </g>
+          <!-- Liaisons -->
+          <path class="line" d="M170,130 C200,80 250,80 230,80"/>
+          <path class="line" d="M350,80 C380,130 410,130 410,130"/>
+          <path class="line" d="M530,130 C560,80 600,80 590,80"/>
+        </svg>
+      </div>
+
+      <!-- Route 2 : US - Poland - Portugal - UK -->
+      <h2>Route 2 : US - Poland - Portugal - UK</h2>
+      <div class="route-diagram">
+        <svg width="900" height="300">
+          <defs>
+            <!-- Même dégradé utilisé pour les serveurs -->
+            <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#1abc9c"/>
+              <stop offset="100%" stop-color="#16a085"/>
+            </radialGradient>
+          </defs>
+          <!-- US -->
+          <g class="pulse">
+            <rect class="server" x="50" y="100" width="120" height="60" rx="10" ry="10"/>
+            <text x="110" y="135" text-anchor="middle" class="server-text">US</text>
+          </g>
+          <!-- Poland -->
+          <g class="pulse">
+            <rect class="server" x="230" y="50" width="120" height="60" rx="10" ry="10"/>
+            <text x="290" y="85" text-anchor="middle" class="server-text">Poland</text>
+          </g>
+          <!-- Portugal -->
+          <g class="pulse">
+            <rect class="server" x="410" y="100" width="120" height="60" rx="10" ry="10"/>
+            <text x="470" y="135" text-anchor="middle" class="server-text">Portugal</text>
+          </g>
+          <!-- UK -->
+          <g class="pulse">
+            <rect class="server" x="590" y="50" width="120" height="60" rx="10" ry="10"/>
+            <text x="650" y="85" text-anchor="middle" class="server-text">UK</text>
+          </g>
+          <!-- Liaisons -->
+          <path class="line" d="M170,130 C200,80 250,80 230,80"/>
+          <path class="line" d="M350,80 C380,130 410,130 410,130"/>
+          <path class="line" d="M530,130 C560,80 600,80 590,80"/>
+        </svg>
+      </div>
+    </div>
+
     <!-- BOUTONS START/STOP -->
     <button id="startBtn" class="btn btn-success">Start</button>
     <button id="stopBtn" class="btn btn-danger">Stop</button>
@@ -371,51 +507,68 @@ include 'trucainclure.php';
         }
     }
 
+    function getLatencyClass(latency) {
+    if (latency <= 400) {
+        return 'latency-green';
+    } else if (latency > 400 && latency <= 600) {
+        return 'latency-orange';
+    } else {
+        return 'latency-red';
+    }
+}
+
+
     // -------------------------------------------------------------------------
     // FETCH METRICS POUR LE GRAPHE ET LE TABLEAU
     // -------------------------------------------------------------------------
     function fetchMetrics() {
-        fetch('ajax_network.php?action=get_data')
-            .then(res => res.json())
-            .then(data => {
-                // data = { timestamp, robots: [ { id, latency, bandwidth, status }, ... ] }
+    fetch('ajax_network.php?action=get_data')
+        .then(res => res.json())
+        .then(data => {
+            // data = { timestamp, robots: [ { id, latency, bandwidth, status }, ... ] }
 
-                const timeLabel = new Date(data.timestamp * 1000).toLocaleTimeString();
+            const timeLabel = new Date(data.timestamp * 1000).toLocaleTimeString();
 
-                // Extraire RobotA & RobotB
-                const robotA = data.robots[0];
-                const robotB = data.robots[1];
+            // Extraire RobotA & RobotB
+            const robotA = data.robots[0];
+            const robotB = data.robots[1];
 
-                // 1) Mettre à jour le chart
-                chartData.labels.push(timeLabel);
-                chartData.datasets[0].data.push(robotA.latency);
-                chartData.datasets[1].data.push(robotB.latency);
+            // 1) Mettre à jour le chart (inchangé)
+            chartData.labels.push(timeLabel);
+            chartData.datasets[0].data.push(robotA.latency);
+            chartData.datasets[1].data.push(robotB.latency);
+            if (chartData.labels.length > 20) {
+                chartData.labels.shift();
+                chartData.datasets[0].data.shift();
+                chartData.datasets[1].data.shift();
+            }
+            latencyChart.update();
 
-                // Pour éviter d'avoir un historique infini, on limite à 20 points
-                if (chartData.labels.length > 20) {
-                    chartData.labels.shift();
-                    chartData.datasets[0].data.shift();
-                    chartData.datasets[1].data.shift();
-                }
+            // 2) Mettre à jour le tableau
+            const tbody = document.getElementById('metricsTableBody');
+            tbody.innerHTML = '';
 
-                latencyChart.update();
+            data.robots.forEach(robot => {
+                const tr = document.createElement('tr');
 
-                // 2) Mettre à jour le tableau
-                const tbody = document.getElementById('metricsTableBody');
-                tbody.innerHTML = '';
-                data.robots.forEach(robot => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${robot.id}</td>
-                        <td>${robot.latency.toFixed(2)}</td>
-                        <td>${robot.bandwidth.toFixed(2)}</td>
-                        <td>${robot.status}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            })
-            .catch(err => console.error(err));
-    }
+                // Déterminer la classe en fonction de la latence
+                let latencyClass = getLatencyClass(robot.latency);
+
+                // On applique cette classe au <tr>
+                tr.classList.add(latencyClass);
+
+                tr.innerHTML = `
+                    <td>${robot.id}</td>
+                    <td>${robot.latency.toFixed(2)}</td>
+                    <td>${robot.bandwidth.toFixed(2)}</td>
+                    <td>${robot.status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(err => console.error(err));
+}
+
     </script>
 
                 <!-- OPERATIONS PAGE -->
