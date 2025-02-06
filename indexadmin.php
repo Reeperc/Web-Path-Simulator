@@ -61,6 +61,9 @@ include 'trucainclure.php';
             background-color: #f8d7da; /* rouge clair */
             color: #721c24;            /* texte rouge foncé */
         }
+        .te0{
+            color:rgb(0, 120, 201);
+        }
 
     </style>
 
@@ -266,7 +269,7 @@ include 'trucainclure.php';
                 <!-- NETWORK METRICS -->
 <!-- NETWORK METRICS -->
 <?php elseif ($currentPage === 'network-metrics'): ?>
-<h1 class="h3 mb-4 text-gray-800 text-center">Network Metrics</h1>
+<h1 class="h3 mb-4 te0 text-center">Network Metrics</h1>
 
 <!-- Styles additionnels pour embellir la page -->
 <style>
@@ -288,7 +291,7 @@ include 'trucainclure.php';
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: 30px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        /* text-shadow: 2px 2px 4px rgba(0,0,0,0.3); */
     }
 
     /* ------------------------ DIAGRAMMES DE ROUTES ------------------------ */
@@ -322,15 +325,23 @@ include 'trucainclure.php';
 
     /* Styles des "serveurs" (étapes géographiques) */
     .server {
-        fill: url(#gradient);
+        fill: #25bb74;
         stroke: #3498db;
         stroke-width: 2;
         filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.5));
         transition: transform 0.3s ease;
         cursor: pointer;
     }
+    .server2 {
+  fill: #ff40ab;
+  stroke: #fbfdff;
+  stroke-width: 2;
+  filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+  cursor: pointer; }
+
     .server:hover {
-        transform: scale(1.06);
+        transform: scale(1.02);
         stroke: #2ecc71;
     }
     .server-text {
@@ -339,6 +350,12 @@ include 'trucainclure.php';
         font-weight: bold;
         pointer-events: none;
     }
+
+    .server2:hover {
+        transform: scale(1.02);
+        stroke: #2ecc71;
+    }
+    
 
     /* Animation de pulsation subtile */
     .pulse {
@@ -362,7 +379,7 @@ include 'trucainclure.php';
         animation: dash 2s linear infinite;
     }
     @keyframes dash {
-        to { stroke-dashoffset: -20; }
+        to { stroke-dashoffset: -5; }
     }
 
     /* ------------------------ BOUTONS START/STOP ------------------------ */
@@ -377,26 +394,26 @@ include 'trucainclure.php';
         transition: all 0.3s ease;
         box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
-    .btn-custom:hover {
+    /* .btn-custom:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    }
+        box-shadow: 0 8px 15px rgb(196, 241, 160);
+    } */
     /* Exemple de gradient pour Start */
     .btn-start {
-        background: linear-gradient(to right, #16a085, #1abc9c);
+        background: linear-gradient(to right, #207ee2, #37c4a8);
         color: #fff;
     }
-    .btn-start:hover {
-        background: linear-gradient(to right, #1abc9c, #2ecc71);
-    }
+    /* .btn-start:hover {
+        background: linear-gradient(to right,rgb(26, 123, 188), #2ecc71);
+    } */
     /* Exemple de gradient pour Stop */
     .btn-stop {
         background: linear-gradient(to right, #c0392b, #e74c3c);
         color: #fff;
     }
-    .btn-stop:hover {
+    /* .btn-stop:hover {
         background: linear-gradient(to right, #e74c3c, #e67e22);
-    }
+    } */
 
     /* ------------------------ GRAPHE ------------------------ */
     /* On force une hauteur plus importante et on laisse la largeur prendre la place dispo */
@@ -450,6 +467,9 @@ include 'trucainclure.php';
     .latency-red {
         background-color: rgba(231, 76, 60, 0.2) !important;
     }
+    .txtr{
+        color:rgb(0, 104, 202)
+    }
 </style>
 
 <div class="network-metrics-container">
@@ -457,9 +477,9 @@ include 'trucainclure.php';
     <!-- DIAGRAMMES DES ROUTES -->
     <div class="route-container">
         <!-- Route 1 : US - Italy - Korea - UK -->
-        <h2>Route 1 : US - Italy - Korea - UK</h2>
+        <h2 class="txtr" >Route 1 : US - Italy - Korea - UK</h2>
         <div class="route-diagram">
-            <svg width="900" height="300">
+            <svg width="900" height="200">
                 <defs>
                     <!-- Dégradé radial pour l'effet lumineux -->
                     <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
@@ -495,9 +515,9 @@ include 'trucainclure.php';
         </div>
 
         <!-- Route 2 : US - Poland - Portugal - UK -->
-        <h2>Route 2 : US - Poland - Portugal - UK</h2>
+        <h2 class="txtr" >Route 2 : US - Poland - Portugal - UK</h2>
         <div class="route-diagram">
-            <svg width="900" height="300">
+            <svg width="900" height="200">
                 <defs>
                     <!-- Même dégradé utilisé pour les serveurs -->
                     <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
@@ -507,22 +527,22 @@ include 'trucainclure.php';
                 </defs>
                 <!-- US -->
                 <g class="pulse">
-                    <rect class="server" x="50" y="100" width="120" height="60" rx="10" ry="10"/>
+                    <rect class="server2" x="50" y="100" width="120" height="60" rx="10" ry="10"/>
                     <text x="110" y="135" text-anchor="middle" class="server-text">US</text>
                 </g>
                 <!-- Poland -->
                 <g class="pulse">
-                    <rect class="server" x="230" y="50" width="120" height="60" rx="10" ry="10"/>
+                    <rect class="server2" x="230" y="50" width="120" height="60" rx="10" ry="10"/>
                     <text x="290" y="85" text-anchor="middle" class="server-text">Poland</text>
                 </g>
                 <!-- Portugal -->
                 <g class="pulse">
-                    <rect class="server" x="410" y="100" width="120" height="60" rx="10" ry="10"/>
+                    <rect class="server2" x="410" y="100" width="120" height="60" rx="10" ry="10"/>
                     <text x="470" y="135" text-anchor="middle" class="server-text">Portugal</text>
                 </g>
                 <!-- UK -->
                 <g class="pulse">
-                    <rect class="server" x="590" y="50" width="120" height="60" rx="10" ry="10"/>
+                    <rect class="server2" x="590" y="50" width="120" height="60" rx="10" ry="10"/>
                     <text x="650" y="85" text-anchor="middle" class="server-text">UK</text>
                 </g>
                 <!-- Liaisons -->
@@ -572,13 +592,13 @@ include 'trucainclure.php';
         labels: [],
         datasets: [
             {
-                label: 'Latency RobotA (ms)',
+                label: 'Latency Route 1 (ms)',
                 data: [],
                 borderColor: 'rgb(75, 192, 192)',
                 fill: false,
             },
             {
-                label: 'Latency RobotB (ms)',
+                label: 'Latency Route 2 (ms)',
                 data: [],
                 borderColor: 'rgb(255, 99, 132)',
                 fill: false,
