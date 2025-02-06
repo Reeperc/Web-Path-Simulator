@@ -564,6 +564,12 @@ include 'trucainclure.php';
         <canvas id="latencyChart"></canvas>
     </div>
 
+    
+    <div class="text-center mb-3">
+    <button id="exportDataBtn" class="btn btn-info">Exporter données (JSON)</button>
+    <button id="exportChartBtn" class="btn btn-info">Exporter graphe (JPEG)</button>
+    </div>
+
     <!-- TABLEAU -->
     <table class="table table-bordered table-hover text-center">
         <thead>
@@ -578,6 +584,9 @@ include 'trucainclure.php';
             <!-- Dynamique -->
         </tbody>
     </table>
+    
+    
+
 </div>
 
 <!-- Chart.js (via CDN) -->
@@ -684,6 +693,51 @@ include 'trucainclure.php';
             return 'latency-red';
         }
     }
+
+    document.getElementById('exportDataBtn').addEventListener('click', function() {
+    // 1. Construire l’objet qu’on veut exporter
+    //    Ici, on exporte chartData tel quel, mais tu peux choisir
+    //    un autre format si nécessaire.
+    const exportObject = {
+        labels: chartData.labels,
+        datasets: chartData.datasets.map(ds => ({
+            label: ds.label,
+            data: ds.data
+            // tu peux aussi ajouter ds.borderColor, ds.fill, etc.
+        }))
+    };
+
+    // 2. Convertir en JSON
+    const jsonStr = JSON.stringify(exportObject, null, 2);
+
+    // 3. Créer un fichier “virtuel” puis simuler le clic
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'network_metrics_data.json'; // Nom du fichier de sortie
+    a.click();
+    
+    // 4. Nettoyer l’URL objet
+    URL.revokeObjectURL(url);
+});
+
+document.getElementById('exportChartBtn').addEventListener('click', function() {
+    // Récupérer l’image en base64
+    // Note : toBase64Image() utilise par défaut le format PNG,
+    //        si tu veux absolument un JPEG, il faut passer par la méthode .canvas.toDataURL().
+    const chartCanvas = latencyChart.canvas;
+    // dataURL au format JPEG (qualité à 1.0 => pleine qualité)
+    const dataURL = chartCanvas.toDataURL('image/jpeg', 1.0);
+
+    // Créer un lien, puis simuler un clic
+    const a = document.createElement('a');
+    a.href = dataURL;
+    a.download = 'network_metrics_chart.jpg';
+    a.click();
+});
+
 
     // -------------------------------------------------------------------------
     // FETCH METRICS POUR LE GRAPHE ET LE TABLEAU
