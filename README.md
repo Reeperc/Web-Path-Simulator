@@ -47,3 +47,14 @@ Avant de commencer, assure-toi d'avoir :
    git clone https://github.com/Reeperc/Web-Path-Simulator/web-site
 
    ```
+
+## 🚀 Contributeurs
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Reeperc"><img src="https://github.com/Reeperc.png" width="100px;" alt=""/><br /><sub><b>@Reeperc</b></sub></a></td>
+    <!-- <td align="center"><a href="https://github.com/pseudo1"><img src="https://github.com/pseudo1.png" width="100px;" alt=""/><br /><sub><b>@pseudo1</b></sub></a></td>
+    <td align="center"><a href="https://github.com/pseudo2"><img src="https://github.com/pseudo2.png" width="100px;" alt=""/><br /><sub><b>@pseudo2</b></sub></a></td>
+    <td align="center"><a href="https://github.com/pseudo3"><img src="https://github.com/pseudo3.png" width="100px;" alt=""/><br /><sub><b>@pseudo3</b></sub></a></td> -->
+  </tr>
+</table>
