@@ -8,7 +8,7 @@ import json
  
 # IP de destination pour tester le r�seau
  
-DEST_IP = "10.9.3.3"
+DEST_IP = "10.8.3.3"
  
 # Fonction pour ex�cuter une commande et r�cup�rer la sortie
  

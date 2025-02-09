@@ -11,47 +11,25 @@ if ($compare_mode) {
     $comparison_data = [];
 
     foreach ($all_servers as $server) {
-        // Exécuter le script Python pour récupérer la latence de chaque serveur
-        $command = "python3 /var/www/html/get_network_metrics.py " . escapeshellarg($server);
-        $output = shell_exec($command);
-        $server_data = json_decode($output, true);
+        $history_file = "latency_history_{$server}.json";
+        $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
 
-        if (isset($server_data["latency"])) {
-            $latency = $server_data["latency"];
-            $timestamp = time(); // Timestamp UNIX
-
-            // Construire l'historique mis à jour
-            $history_file = "latency_history_{$server}.json";
-            $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
-            $history[] = ["time" => $timestamp, "latency" => $latency];
-
-            // Garder uniquement les 10 dernières valeurs
-            if (count($history) > 10) {
-                array_shift($history);
-            }
-
-            // Sauvegarder l'historique mis à jour
-            file_put_contents($history_file, json_encode($history));
-
-            // Ajouter les nouvelles données au tableau de comparaison
-            $comparison_data[$server] = [
-                "latest_latency" => $latency,
-                "latest_time"    => date("H:i:s", $timestamp),
-                "history"        => $history
-            ];
-        } else {
-            $comparison_data[$server] = [
-                "latest_latency" => null,
-                "latest_time"    => "N/A",
-                "history"        => []
-            ];
+        // Si l'historique est vide, on initialise avec une entrée nulle
+        if (empty($history)) {
+            $history = [["time" => time(), "latency" => null]];
         }
+
+        $last_entry = end($history);
+        $comparison_data[$server] = [
+            "latest_latency" => isset($last_entry["latency"]) ? $last_entry["latency"] : null,
+            "latest_time"    => isset($last_entry["time"]) ? date("H:i:s", $last_entry["time"]) : "N/A",
+            "history"        => $history
+        ];
     }
 
     echo json_encode(["comparison" => $comparison_data]);
-    exit(); // On s'arrête ici en mode comparaison
+    exit(); // On s'arrête ici en mode comparaison
 }
-
 
 // Mode par défaut (pour un seul serveur)
 $server = isset($_GET['server']) ? $_GET['server'] : 'UK';

@@ -111,8 +111,6 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                 </a>
             </li>
 
-       
-
 
             <!-- Network Metrics -->
             <li class="nav-item <?= $currentPage === 'network-metrics' ? 'active' : '' ?>">
@@ -244,9 +242,7 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                 </div>
                             </div>
                         </div>
-                        
-                    <?php elseif ($currentPage === 'network-comparison'): ?>
-                        <?php include 'network_comparison.php'; ?>
+
 
                     <?php elseif ($currentPage === 'network-metrics'): ?>
                         <h1 class="h3 mb-4 text-gray-800">Network Metrics</h1>
@@ -318,7 +314,7 @@ $success = isset($_GET['success']) ? $_GET['success'] : false;
                                 <h6 class="m-0 font-weight-bold text-primary">Network Evolution</h6>
                             </div>
                             <div class="card-body">
-                                 <?php include "network_comparison.php"; ?>
+                                <canvas id="latencyChart"></canvas>
                             </div>
                         </div>
 
@@ -604,7 +600,7 @@ Scheduled Date: ${scheduledDate}`);
             calendar.render();
         });
     </script>
-    <!-- <script>
+    <script>
         let latencyData = []; // Stocke les valeurs de latence
         let timeLabels = []; // Stocke les timestamps des mesures
 
@@ -668,7 +664,7 @@ Scheduled Date: ${scheduledDate}`);
 
         // Charger les métriques au démarrage
         updateLatencyChart();
-    </script> -->
+    </script>
 
 </body>
 
