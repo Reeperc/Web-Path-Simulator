@@ -44,6 +44,6 @@ Avant de commencer, assure-toi d'avoir :
 1. **Cloner le projet** :
 
    ```sh
-   git clone https://github.com/Reeperc/Web-Path-Simulator/html
+   git clone https://github.com/Reeperc/Web-Path-Simulator/web-site
 
    ```
