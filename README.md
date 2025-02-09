@@ -10,11 +10,11 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 
 ### 🔹 Visualisation des chemins configurés
 
-![Visualisation des chemins](chemin/vers/image1.png)
+![Visualisation des chemins](img/interface_web_routes.jpg)
 
 ### 🔹 Monitoring des chemins
 
-![Monitoring des chemins](chemin/vers/image2.png)
+![Monitoring des chemins](img/interface_web_monitoring.jpg)
 
 ## Fonctionnalités
 
