@@ -11,10 +11,3 @@
 5️⃣ Ouvrir une Pull Request (PR)
 
 ---
-
-## 🔗 Infrastructure réseau
-
-- Un serveur Web local (VM VirtualBox)
-- Plusieurs serveurs distants sur Azure
-- Connexion VPN entre les serveurs
-- Routage dynamique via `iptables` et `ip route`
