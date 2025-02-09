@@ -46,6 +46,8 @@ La valeur `1` doit être affichée.
 
 ## 2️⃣ Configuration de iptables pour le Routage
 
+### 🛡️ Autoriser le transfert de paquets entre les interfaces VPN
+
 Sur un serveur ayant plusieurs interfaces VPN (`tunX`), ajouter ces règles :
 
 ```sh
