@@ -121,15 +121,3 @@ sudo iptables -t nat -F
 ```
 
 ---
-
-## ✅ Conclusion
-
-Ce guide donne une compréhension complète d’`iptables`, de ses options et de son utilisation pour un serveur VPN avec une seule interface `tun0`.
-
-🔹 **Prochaines étapes :**
-
-- Tester les règles avec `tcpdump`.
-- Ajouter des règles de journalisation (`LOG`).
-- Automatiser la gestion des règles avec des scripts shell.
-
-🚀 **Bon routage !** 🔗
