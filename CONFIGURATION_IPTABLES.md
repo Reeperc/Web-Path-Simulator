@@ -46,6 +46,13 @@ La valeur `1` doit être affichée.
 
 ## 2️⃣ Configuration de iptables pour le Routage
 
+Sur un serveur ayant plusieurs interfaces VPN (`tunX`), ajouter ces règles :
+
+```sh
+sudo iptables -A FORWARD -i tun0 -o tun1 -j ACCEPT
+sudo iptables -A FORWARD -i tun1 -o tun0 -j ACCEPT
+```
+
 ### 🔹 Cas spécifique : Serveur VPN avec une seule interface `tun0`
 
 Si le serveur VPN n’a qu’une seule interface `tun0` et que les machines clientes sont connectées uniquement à lui, il faut activer le routage des paquets entre elles :
