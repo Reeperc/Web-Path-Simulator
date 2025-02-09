@@ -48,7 +48,7 @@ Avant de commencer, assure-toi d'avoir :
 
    ```
 
-## 🚀 Contributeurs
+<!-- ## 🚀 Contributeurs
 
 <table>
   <tr>
@@ -57,4 +57,4 @@ Avant de commencer, assure-toi d'avoir :
     <td align="center"><a href="https://github.com/pseudo2"><img src="https://github.com/pseudo2.png" width="100px;" alt=""/><br /><sub><b>@pseudo2</b></sub></a></td>
     <td align="center"><a href="https://github.com/pseudo3"><img src="https://github.com/pseudo3.png" width="100px;" alt=""/><br /><sub><b>@pseudo3</b></sub></a></td> -->
   </tr>
-</table>
+</table> -->
