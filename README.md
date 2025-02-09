@@ -6,6 +6,9 @@ Le **Web Path Simulator (WPS)** est un projet développé dans le cadre de **PIN
 
 L’objectif est d’observer la latence et la bande passante sur différentes routes composées de serveurs distants hébergés sur **Azure**. Les données sont ensuite comparées pour identifier le chemin optimal pour la transmission des paquets.
 
+![Chemins configurés](img/interface_web_routes.jpgg)
+![Interface de monitoring des chemins](img/interface_web_monitoring.jpg)
+
 ## Fonctionnalités
 
 - 📡 **Envoi de paquets ICMP** via différentes routes.
@@ -32,6 +35,7 @@ Avant de commencer, assure-toi d'avoir :
 ## Installation
 
 1. **Cloner le projet** :
+
    ```sh
    git clone https://github.com/Reeperc/Web-Path-Simulator/html
 
