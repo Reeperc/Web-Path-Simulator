@@ -40,7 +40,7 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 
 ## Installation
 
-1. **Travailler sur le site web du projet** :
+**Travailler sur le site web du projet** :
 
 🔹 Si vous souhaitez uniquement travailler sur l'interface web du projet, le dossier **web-site** de ce dépôt est l'équivalent du dossier **html** habituellement utilisé avec apache (`/var/www/html`).
 
