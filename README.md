@@ -48,13 +48,15 @@ Avant de commencer, assure-toi d'avoir :
 
    ```
 
-<!-- ## 🚀 Contributeurs
+## 🚀 Contributeurs
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/Reeperc"><img src="https://github.com/Reeperc.png" width="100px;" alt=""/><br /><sub><b>@Reeperc</b></sub></a></td>
-    <td align="center"><a href="https://github.com/pseudo1"><img src="https://github.com/pseudo1.png" width="100px;" alt=""/><br /><sub><b>@pseudo1</b></sub></a></td>
-    <td align="center"><a href="https://github.com/pseudo2"><img src="https://github.com/pseudo2.png" width="100px;" alt=""/><br /><sub><b>@pseudo2</b></sub></a></td>
-    <td align="center"><a href="https://github.com/pseudo3"><img src="https://github.com/pseudo3.png" width="100px;" alt=""/><br /><sub><b>@pseudo3</b></sub></a></td>
+    <td align="center"><a href="https://github.com/Rajwa"><img src="https://github.com/Rajwa.png" width="100px;" alt=""/><br /><sub><b>@Rajwa</b></sub></a></td>
+    <td align="center"><a href="https://github.com/wang-zhuofan"><img src="https://github.com/wang-zhuofan.png" width="100px;" alt=""/><br /><sub><b>@wang-zhuofan</b></sub></a></td>
+    <td align="center"><a href="https://github.com/L01c"><img src="https://github.com/L01c.png" width="100px;" alt=""/><br /><sub><b>@L01c</b></sub></a></td>
+    <td align="center"><a href="https://github.com/baptisteproper"><img src="https://github.com/baptisteproper.png" width="100px;" alt=""/><br /><sub><b>@baptisteprope</b></sub></a></td>
+    <td align="center"><a href="https://github.com/SiwarR"><img src="https://github.com/SiwarR.png" width="100px;" alt=""/><br /><sub><b>@SiwarR</b></sub></a></td>
   </tr>
-</table> -->
+</table>
