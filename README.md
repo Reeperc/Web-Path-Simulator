@@ -32,12 +32,11 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 
 ## Prérequis
 
-Avant de commencer, assure-toi d'avoir :
 
 - 🔹 Des connaissances en **routage réseau** (`iptables`, `ip route`).
 - 🔹 Une compréhension des **VPN et tunnels** (`OpenVPN`).
-- 🔹 Des outils de mesure réseau installés (`ping`, `traceroute`, `iperf`).
-- 🔹 Un environnement de développement web.
+- 🔹 Outils de mesure réseau (`ping`, `traceroute`, `iperf`).
+- 🔹 Développement web.
 
 ## Installation
 
