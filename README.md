@@ -52,12 +52,14 @@ cd Web-Path-Simulator/web-site
 🔹 Copier le dossier web-site dans /var/www/html :
 
 ```sh
+cd Web-Path-Simulator
 sudo cp -r web-site /var/www/html
 ```
 
 🔹 Supprimer le dossier html, copier web-site dans /var/www et le renommer en html :
 
 ```sh
+cd Web-Path-Simulator
 sudo rm -rf /var/www/html && sudo cp -r web-site /var/www/html
 ```
 
