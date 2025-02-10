@@ -4,7 +4,7 @@
 
 Le **Web Path Simulator (WPS)** est un projet développé dans le cadre du **PING 53** (projet ingénieur - année 2024-2025) réalisé par un groupe de six étudiants dont moi-même. Il permet de simuler l’envoi de paquets à travers plusieurs routes réseau dans le monde et d'analyser leurs performances en temps réel.
 
-L’objectif est d’observer la latence et la bande passante sur différentes routes composées de serveurs distants hébergés sur **Azure**. Les données sont ensuite comparées pour identifier le chemin optimal pour la transmission des paquets. Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.
+L’objectif est d’observer la latence et la bande passante sur différentes routes composées de serveurs distants hébergés sur **Azure**. Les données sont ensuite comparées pour identifier le chemin optimal pour la transmission de paquets. Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.
 
 ## Interface de l'application web :
 
@@ -58,12 +58,12 @@ sudo cp -r web-site /var/www/html
 
 🔹 Supprimer le dossier html, copier web-site dans /var/www et le renommer en html :
 
+⚠️ Attention : Cette commande supprimera complètement le dossier /var/www/html original.
+
 ```sh
 cd Web-Path-Simulator
 sudo rm -rf /var/www/html && sudo cp -r web-site /var/www/html
 ```
-
-⚠️ Attention : Cette commande supprimera complètement le dossier /var/www/html original.
 
 ## 🎯 Pourquoi ce projet ?
 
