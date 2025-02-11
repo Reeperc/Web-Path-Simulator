@@ -21,7 +21,7 @@ ping -c 5 <adresse-IP>
 💡 **Exemple d'utilisation :**
 
 ```sh
-ping -c 5 8.8.8.8
+ping -c 5 10.8.3.3
 ```
 
 ---
