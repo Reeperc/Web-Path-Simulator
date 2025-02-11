@@ -1,6 +1,6 @@
 # 📡 Utilisation des Outils Réseau
 
-Ce guide fournit un aperçu des outils réseau essentiels (`ping`, `iperf`, `tcpdump`) pour surveiller et analyser la connectivité et la performance d'un réseau.
+Ce guide fournit un aperçu des outils réseau essentiels (`ping`, `iperf`, `tcpdump`,`traceroute`) pour surveiller et analyser la connectivité et la performance d'un réseau.
 
 ---
 
@@ -32,11 +32,13 @@ ping -c 5 8.8.8.8
 
 #### 🔸 Lancer un serveur `iperf`
 
-Sur la machine cible :
+Sur la machine cible (ex: sur la machine Angleterre):
 
 ```sh
 iperf -s
 ```
+
+📌 **Note :** Cette commande doit être exécutée manuellement sur la machine cible pour permettre la mesure de la bande passante. Elle peut être automatisée via un script PHP, mais cela n’a pas été implémenté dans notre version du projet.
 
 #### 🔸 Tester la connexion depuis un client
 
@@ -46,17 +48,20 @@ Depuis un autre hôte, exécuter :
 iperf -c <adresse-IP-serveur>
 ```
 
+💡 **Exemple d'utilisation :**
+
+Dans notre cas on effectuait via un script PHP depuis le Serveur WEB :
+
+```sh
+iperf -c 10.8.3.3
+iperf -c 10.9.3.3
+```
+
 🔹 **Options utiles :**
 
 - `-u` : Mode UDP (par défaut, `iperf` utilise TCP).
 - `-b 10M` : Fixe une limite de bande passante (ex: 10 Mbps).
 - `-t 30` : Durée du test en secondes.
-
-💡 **Exemple d'utilisation :**
-
-```sh
-iperf -c 192.168.1.10 -t 10 -i 1
-```
 
 ---
 
@@ -90,14 +95,24 @@ sudo tcpdump -i tun0 port 443
 
 ---
 
-## ✅ Conclusion
+### 🔹 `traceroute` : Suivi du Chemin des Paquets
 
-Ces outils sont essentiels pour diagnostiquer et optimiser la performance d’un réseau.
+`traceroute` permet d’identifier le chemin exact suivi par les paquets pour atteindre une destination.
 
-🔹 **Prochaines étapes :**
+```sh
+traceroute <adresse-IP>
+```
 
-- Automatiser les tests avec des scripts.
-- Combiner `tcpdump` et `Wireshark` pour une analyse approfondie.
-- Tester différentes tailles de paquets et débits avec `iperf`.
+- `-n` : Affiche uniquement les adresses IP (évite la résolution DNS pour plus de rapidité).
+- `-I` : Utilise ICMP au lieu d’UDP.
+- `-T` : Utilise TCP au lieu d’UDP.
 
-🚀 **Bon monitoring réseau !**
+💡 **Exemple d'utilisation :**
+
+Pour vérifier le chemin emprunté vers un serveur cible spécifique, par exemple `10.8.3.3`, exécuter :
+
+```sh
+traceroute 10.8.3.3
+```
+
+---
