@@ -29,19 +29,27 @@ La valeur `1` doit être affichée.
 
 ![Visualisation des routes](img/schema_config.jpg)
 
-Dans le projet, la machine **USA** dispose de plusieurs chemins pour atteindre la machine **Angleterre** :
-
-- Via **10.8.3.0/24** (passant par la Corée)
-- Via **10.9.3.0/24** (passant par la Pologne et West Europe)
-
 ### 📌 Ajout des routes sur **USA** :
 
+Dans le projet, la machine **USA** dispose de deux chemins pour atteindre la machine **Angleterre** :
+
+- Via **10.8.2.2/24** (**tun1**)
+
 ```sh
-sudo ip route add 10.8.3.0/24 via 10.8.2.2 dev tun1  # Passer par la Corée
-sudo ip route add 10.9.3.0/24 via 10.9.2.2 dev tun2  # Passer par la Pologne
+sudo ip route add 10.8.3.0/24 via 10.8.2.2 dev tun1
 ```
 
-Ces routes permettent à **USA** de relayer le trafic en fonction des interfaces disponibles.
+Cela ajoute une route statique sur la machine en indiquant comment atteindre le réseau 10.8.3.0/24 en passant par 10.8.2.2 via l'interface tun1.
+
+- Via **10.9.2.2/24** (**tun2**)
+
+```sh
+sudo ip route add 10.9.3.0/24 via 10.9.2.2 dev tun2
+```
+
+De même ici, pour atteindre le réseau 10.9.3.0/24 on passe par 10.9.2.2 via tun2.
+
+Ces routes permettent à la machine **USA** de relayer le trafic proprement.
 
 ---
 
@@ -67,7 +75,7 @@ sudo iptables -t nat -A POSTROUTING -o tun2 -j MASQUERADE
 
 ---
 
-### 🔹 Serveur **Corée du Sud**
+### 🔹 Serveur **Italie**
 
 ```sh
 sudo iptables -A FORWARD -i tun0 -o tun1 -j ACCEPT
@@ -75,17 +83,23 @@ sudo iptables -A FORWARD -i tun1 -o tun0 -j ACCEPT
 sudo iptables -t nat -A POSTROUTING -o tun1 -j MASQUERADE
 ```
 
----
+Même configurations pour le serveur **Poland**.
 
-### 🔹 Serveur **Italie**
+### 🔹 Serveur **Corée**
 
-Redirection des paquets ICMP venant de la Corée et visant l'Italie, puis renvoyés vers la cible UK :
+Redirection des paquets ICMP venant de l'Italie et visant la Corée, puis renvoyés vers la cible Angleterre :
 
 ```sh
-sudo iptables -t nat -A PREROUTING -s 10.8.3.2 -d 10.8.2.1 -p icmp -j DNAT --to-destination <IP_UK>
+sudo iptables -t nat -A PREROUTING -s 10.8.3.2 -d 10.8.3.1 -p icmp -j DNAT --to-destination 10.8.3.3
 ```
 
-Activer le NAT :
+Pour le Serveur West Europe on aurait :
+
+```sh
+sudo iptables -t nat -A PREROUTING -s 10.9.3.2 -d 10.9.3.1 -p icmp -j DNAT --to-destination 10.9.3.3
+```
+
+Ensuite, il faut activer le NAT :
 
 ```sh
 sudo iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
