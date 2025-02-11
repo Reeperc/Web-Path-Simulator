@@ -25,6 +25,10 @@ La valeur `1` doit être affichée.
 
 ## 🌍 Configuration du Routage Dynamique
 
+### 🔹 Schéma des routes utilisées durant le projet
+
+![Visualisation des routes](img/schema_config.jpg)
+
 Dans le projet, la machine **USA** dispose de plusieurs chemins pour atteindre la machine **Angleterre** :
 
 - Via **10.8.3.0/24** (passant par la Corée)
