@@ -6,7 +6,7 @@ Ce guide fournit un aperçu des outils réseau essentiels (`ping`, `iperf`, `tcp
 
 ## 🛠 Outils de Test et Surveillance Réseau
 
-### 🔹 `ping` : Vérification de la Latence
+## 🔹 `ping` : Vérification de la Latence
 
 Le `ping` est utilisé pour tester la connectivité entre deux machines en mesurant le temps de réponse (latence).
 
@@ -26,7 +26,7 @@ ping -c 5 10.8.3.3
 
 ---
 
-### 🔹 `iperf` : Mesure de la Bande Passante
+## 🔹 `iperf` : Mesure de la Bande Passante
 
 `iperf` permet d’analyser la bande passante entre deux hôtes en envoyant des flux de données.
 
@@ -65,7 +65,7 @@ iperf -c 10.9.3.3
 
 ---
 
-### 🔹 `tcpdump` : Capture et Analyse du Trafic Réseau
+## 🔹 `tcpdump` : Capture et Analyse du Trafic Réseau
 
 `tcpdump` est un outil puissant pour capturer et analyser le trafic réseau en temps réel.
 
@@ -95,7 +95,7 @@ sudo tcpdump -i tun0 port 443
 
 ---
 
-### 🔹 `traceroute` : Suivi du Chemin des Paquets
+## 🔹 `traceroute` : Suivi du Chemin des Paquets
 
 `traceroute` permet d’identifier le chemin exact suivi par les paquets pour atteindre une destination.
 
