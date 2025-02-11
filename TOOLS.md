@@ -1,6 +1,6 @@
 # 📡 Utilisation des Outils Réseau
 
-Ce guide fournit un aperçu des outils réseau essentiels (`ping`, `iperf`, `tcpdump`,`traceroute`) pour surveiller et analyser la connectivité et la performance d'un réseau.
+Ce guide fournit un aperçu des outils réseau utilisés durant le projet (`ping`, `iperf`, `tcpdump`,`traceroute`) pour surveiller et analyser la connectivité et la performance des chemins configurés.
 
 ---
 
