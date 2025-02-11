@@ -1,6 +1,6 @@
 # 💼 Configuration d’un Serveur OpenVPN
 
-Ce guide explique comment installer et configurer un **serveur OpenVPN** (et un client VPN) sur une machine distante. Il détaille également la configuration des clients pour établir une connexion sécurisée.
+Ce guide explique comment installer et configurer un **serveur OpenVPN** (et un client VPN) sur une machine distante Azure.
 
 ---
 
