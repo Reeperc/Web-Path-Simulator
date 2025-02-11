@@ -83,11 +83,11 @@ sudo iptables -A FORWARD -i tun1 -o tun0 -j ACCEPT
 sudo iptables -t nat -A POSTROUTING -o tun1 -j MASQUERADE
 ```
 
-Même configurations pour le serveur **Poland**.
+Mêmes configurations pour le serveur **Poland**.
 
 ### 🔹 Serveur **Corée**
 
-Redirection des paquets ICMP venant de l'Italie et visant la Corée, puis renvoyés vers la cible Angleterre :
+Redirection des paquets ICMP venant de l'Italie et visant la Corée, vers la cible Angleterre :
 
 ```sh
 sudo iptables -t nat -A PREROUTING -s 10.8.3.2 -d 10.8.3.1 -p icmp -j DNAT --to-destination 10.8.3.3
