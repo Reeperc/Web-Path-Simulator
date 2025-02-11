@@ -93,7 +93,7 @@ Redirection des paquets ICMP venant de l'Italie et visant la Corée, puis renvoy
 sudo iptables -t nat -A PREROUTING -s 10.8.3.2 -d 10.8.3.1 -p icmp -j DNAT --to-destination 10.8.3.3
 ```
 
-Pour le Serveur West Europe on aurait :
+Pour le Serveur **West Europe** on aurait :
 
 ```sh
 sudo iptables -t nat -A PREROUTING -s 10.9.3.2 -d 10.9.3.1 -p icmp -j DNAT --to-destination 10.9.3.3
