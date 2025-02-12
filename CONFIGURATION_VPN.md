@@ -30,10 +30,10 @@ sudo ./openvpn-install.sh
 
 Pendant l’installation :
 
-- **Adresse du serveur** : laisse par défaut (appuyer sur `Entrée`).
+- **Adresse du serveur** : laisser par défaut (appuyer sur `Entrée`).
 - **Protocole** : utiliser **TCP** (option `2`).
 - **Port** : utiliser **443** (si un autre port est choisi, s'assurer de l'ouvrir sur Azure).
-- **DNS** : choisis `Current system resolvers` (option `1`).
+- **DNS** : choisir `Current system resolvers` (option `1`).
 
 Une fois l’installation terminée, le service OpenVPN sera automatiquement démarré (même après un redémarrage, il se réactive automatiquement).
 
