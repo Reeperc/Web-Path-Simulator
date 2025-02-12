@@ -15,8 +15,7 @@ $currentPage = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 // Check for success parameter to display success modal
 $success = isset($_GET['success']) ? $_GET['success'] : false;
 
-// Inclure le script qui gère l'AJAX (ping/iperf) si POST
-include 'trucainclure.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
