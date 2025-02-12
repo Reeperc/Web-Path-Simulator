@@ -192,5 +192,3 @@ sudo netfilter-persistent save
 ```
 
 ---
-
-🚀 **Bon courage !** 🛡
