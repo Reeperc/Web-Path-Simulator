@@ -67,7 +67,7 @@ Modifier la ligne suivante pour attribuer une autre plage d’adresses :
 server 10.8.1.0 255.255.255.0
 ```
 
-Sauvegarder (`Ctrl + S`, puis `Ctrl + X`), puis redémarrer OpenVPN :
+Sauvegarder, puis redémarrer OpenVPN :
 
 ```sh
 sudo systemctl restart openvpn-server@server
