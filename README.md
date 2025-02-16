@@ -73,10 +73,10 @@ Avec l'essor des procédures médicales robotisées, la nécessité d'un contrô
 
 ### 🌍 Contexte et utilité :
 
-- 🏥 **Accès aux soins amélioré** : Permet d’envisager des diagnostics et interventions à distance, réduisant les inégalités géographiques en matière de santé.
-- ⚡ **Simulation réaliste** : Évalue l'impact des pertes de connexion, délais et désynchronisations sur une opération robotisée à distance.
-- 🔄 **Optimisation des réseaux** : Identifie les meilleures configurations de transmission pour garantir un contrôle fiable du robot via des réseaux publics.
-- 👥 **Multi-utilisateur** : Permet la gestion sécurisée du contrôle d’un robot par plusieurs médecins, via un système de jetons.
+-  **Accès aux soins amélioré** : Permet d’envisager des diagnostics et interventions à distance, réduisant les inégalités géographiques en matière de santé.
+-  **Simulation réaliste** : Évalue l'impact des pertes de connexion, délais et désynchronisations sur une opération robotisée à distance.
+-  **Optimisation des réseaux** : Identifie les meilleures configurations de transmission pour garantir un contrôle fiable du robot via des réseaux publics.
+-  **Multi-utilisateur** : Permet la gestion sécurisée du contrôle d’un robot par plusieurs médecins, via un système de jetons.
 
 Ce projet constitue une **étape clé** dans la recherche sur la télémédecine et ouvre la voie à des **applications concrètes** pour les hôpitaux et centres de recherche. Il a été initié par **Benjamin Castaneda**, spécialisée en ingénierie biomédicale.
 
