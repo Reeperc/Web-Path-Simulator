@@ -29,8 +29,8 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 ## Configuration mise en place
 
 - **Serveur Web local** (VM sur VirtualBox) pour l’envoi des paquets.
-- **Routage** entre plusieurs serveurs distants via OpenVPN (cf [Config routage](/CONFIGURATION_ROUTAGE.md) et [Config VPN](/CONFIGURATION_VPN.md)).
-- **Analyse des performances réseau** avec `ping`, `iperf` et `tcpdump` (cf [Outils](/TOOLS.md)).
+- **Routage** entre plusieurs serveurs distants via OpenVPN (cf [config routage](/CONFIGURATION_ROUTAGE.md) et [config VPN](/CONFIGURATION_VPN.md)).
+- **Analyse des performances réseau** avec `ping`, `iperf` et `tcpdump` (cf [outils](/TOOLS.md)).
 
 ## Installation
 
