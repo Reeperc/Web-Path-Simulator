@@ -6,7 +6,7 @@ Le **Web Path Simulator (WPS)** est un projet développé dans le cadre du **PIN
 
 L’objectif est d’observer la latence et la bande passante sur différentes routes composées de serveurs distants hébergés sur **Azure**. Les données sont ensuite comparées pour identifier le chemin optimal pour la transmission de paquets.
 
-**Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.**
+**Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.** Avec l'essor des procédures médicales robotisées, la nécessité d'un contrôle à distance des équipements devient cruciale, notamment pour lutter contre les **déserts médicaux**. Le **WebPathSimulator** (dans sa version finale) vise à tester et améliorer la transmission des données entre un praticien et un **robot UR** en simulant divers scénarios de communication longue distance (200 à 1000 km).
 
 ## Interface de l'application web :
 
@@ -20,25 +20,17 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 
 ## Fonctionnalités de cette version de l'application :
 
-- 📡 **Envoi de paquets ICMP** via différentes routes.
-- 🔍 **Monitoring en temps réel** des métriques réseau (latence, bande passante).
-- 🔗 **Utilisation d’un VPN (OpenVPN)** pour relier plusieurs serveurs distants.
-- 🌍 **Serveurs répartis dans différentes régions du monde** (USA, Italie, Corée, Angleterre, Pologne, Portugal).
-- 🌐 **Interface Web** pour visualiser et tester les différentes routes.
+-  **Envoi de paquets ICMP** via différentes routes.
+-  **Monitoring en temps réel** des métriques réseau (latence, bande passante).
+-  **Utilisation d’un VPN (OpenVPN)** pour relier plusieurs serveurs distants.
+-  **Serveurs répartis dans différentes régions du monde** (USA, Italie, Corée, Angleterre, Pologne, Portugal).
+-  **Interface Web** pour visualiser et tester les différentes routes.
 
 ## Configuration mise en place
 
 - **Serveur Web local** (VM sur VirtualBox) pour l’envoi des paquets.
 - **Routage** entre plusieurs serveurs distants via OpenVPN.
 - **Analyse des performances réseau** avec `ping`, `iperf` et `tcpdump`.
-
-## Prérequis / outils utilisés
-
-- 🔹 Des connaissances en **routage réseau** (`iptables`, `ip route`).
-- 🔹 Une compréhension des **VPN et tunnels** (`OpenVPN`).
-- 🔹 Outils de mesure réseau (`ping`, `traceroute`, `iperf`).
-- 🔹 Développement web.
-- 🔹 Serveurs Ubuntu Azure
 
 ## Installation
 
@@ -66,19 +58,6 @@ sudo cp -r web-site /var/www/html
 cd Web-Path-Simulator
 sudo rm -rf /var/www/html && sudo cp -r web-site /var/www/html
 ```
-
-## 🎯 Pourquoi ce projet ?
-
-Avec l'essor des procédures médicales robotisées, la nécessité d'un contrôle à distance des équipements devient cruciale, notamment pour lutter contre les **déserts médicaux**. Le **WebPathSimulator (WPS)** (dans sa version finale) vise à tester et améliorer la transmission des données entre un praticien et un **robot UR** en simulant divers scénarios de communication longue distance (200 à 1000 km).
-
-### 🌍 Contexte et utilité :
-
--  **Accès aux soins amélioré** : Permet d’envisager des diagnostics et interventions à distance, réduisant les inégalités géographiques en matière de santé.
--  **Simulation réaliste** : Évalue l'impact des pertes de connexion, délais et désynchronisations sur une opération robotisée à distance.
--  **Optimisation des réseaux** : Identifie les meilleures configurations de transmission pour garantir un contrôle fiable du robot via des réseaux publics.
--  **Multi-utilisateur** : Permet la gestion sécurisée du contrôle d’un robot par plusieurs médecins, via un système de jetons.
-
-Ce projet constitue une **étape clé** dans la recherche sur la télémédecine et ouvre la voie à des **applications concrètes** pour les hôpitaux et centres de recherche. Il a été initié par **Benjamin Castaneda**, spécialisée en ingénierie biomédicale.
 
 ## 🚀 Contributeurs
 
