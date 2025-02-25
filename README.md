@@ -20,17 +20,17 @@ L’objectif est d’observer la latence et la bande passante sur différentes r
 
 ## Fonctionnalités de cette version de l'application :
 
--  **Envoi de paquets ICMP** via différentes routes.
--  **Monitoring en temps réel** des métriques réseau (latence, bande passante).
--  **Utilisation d’un VPN (OpenVPN)** pour relier plusieurs serveurs distants.
--  **Serveurs répartis dans différentes régions du monde** (USA, Italie, Corée, Angleterre, Pologne, Portugal).
--  **Interface Web** pour visualiser et tester les différentes routes.
+- **Envoi de paquets ICMP** via différentes routes.
+- **Monitoring en temps réel** des métriques réseau (latence, bande passante).
+- **Utilisation d’un VPN (OpenVPN)** pour relier plusieurs serveurs distants.
+- **Serveurs répartis dans différentes régions du monde** (USA, Italie, Corée, Angleterre, Pologne, Portugal).
+- **Interface Web** pour visualiser et tester les différentes routes.
 
 ## Configuration mise en place
 
 - **Serveur Web local** (VM sur VirtualBox) pour l’envoi des paquets.
-- **Routage** entre plusieurs serveurs distants via OpenVPN (cf `CONFIGURATION_ROUTAGE.md` et `CONFIGURATION_VPN.md`).
-- **Analyse des performances réseau** avec `ping`, `iperf` et `tcpdump` (cf `TOOLS.md`).
+- **Routage** entre plusieurs serveurs distants via OpenVPN (cf [Config routage](/CONFIGURATION_ROUTAGE.md) et [Config VPN](/CONFIGURATION_VPN.md)).
+- **Analyse des performances réseau** avec `ping`, `iperf` et `tcpdump` (cf [Outils](/TOOLS.md)).
 
 ## Installation
 
