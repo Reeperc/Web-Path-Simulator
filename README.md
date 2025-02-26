@@ -6,7 +6,9 @@ Le **Web Path Simulator (WPS)** est un projet développé dans le cadre du **PIN
 
 L’objectif est d’observer la latence et la bande passante sur différentes routes composées de serveurs distants hébergés sur **Azure**. Les données sont ensuite comparées pour identifier le chemin optimal pour la transmission de paquets.
 
-**Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.** Avec l'essor des procédures médicales robotisées, la nécessité d'un contrôle à distance des équipements devient cruciale, notamment pour lutter contre les **déserts médicaux**. Le **WebPathSimulator** (dans sa version finale) vise à tester et améliorer la transmission des données entre un praticien et un **robot UR** en simulant divers scénarios de communication longue distance (200 à 1000 km). Le projet a été initié par **Benjamin Castaneda**, spécialisé en ingénierie biomédicale.
+**Il est important de noter que cette version n'est pas aboutie et reste éloignée des attentes de la version finale du WPS.** Avec l'essor des procédures médicales robotisées, la nécessité d'un contrôle à distance des équipements devient cruciale, notamment pour lutter contre les **déserts médicaux**. Le **WebPathSimulator** (dans sa version finale) vise à tester et améliorer la transmission des données entre un praticien et un **robot UR** en simulant divers scénarios de communication longue distance (200 à 1000 km). 
+
+Le projet a été initié par **Benjamin Castaneda**, spécialisé en ingénierie biomédicale.
 
 ## Interface de l'application web :
 
